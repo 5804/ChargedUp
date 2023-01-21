@@ -10,6 +10,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -22,7 +23,14 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.SPI;
+
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
@@ -138,6 +146,8 @@ public class Swerve extends SubsystemBase {
         gyroAngle.setDouble(gyro.getYaw());
        //SmartDashboard.putNumber("gyro2", getyaw);
 
+    
+
 
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
@@ -145,5 +155,21 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);   
            
         }
+    }
+
+    public Command createCommandForTrajectory(PathPlannerTrajectory trajectory) {
+        return new PPSwerveControllerCommand(
+              trajectory,
+              this::getPose, // Functional interface to feed supplier
+              Constants.Swerve.swerveKinematics,
+        
+              // Position controllers
+              new PIDController(Constants.AutoConstants.kPXController, 0, 0),
+              new PIDController(Constants.AutoConstants.kPYController, 0, 0),
+              // new ProfilePIDController(Constants.AutoConstants.kPThetaController, 0, 0, Constants.AutoConstants.kThetaControllerConstraints),
+              new PIDController(Constants.AutoConstants.kPThetaController, 0, 0),
+              this::setModuleStates,
+              this
+        );
     }
 } 

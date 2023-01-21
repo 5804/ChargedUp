@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.lang.reflect.InaccessibleObjectException;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -29,8 +31,9 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton runUp = new JoystickButton(driver, XboxController.Button.kA.value);
-    private final JoystickButton runDown = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final JoystickButton runUp = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final JoystickButton runDown = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton zeroElevatorEncoder = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
@@ -62,8 +65,12 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        runUp.onTrue(new InstantCommand(() -> m_Elevator.runUp()));
-        runDown.onTrue(new InstantCommand(() -> m_Elevator.runDown()));
+       runUp.onTrue(new InstantCommand(() -> m_Elevator.runUp()));
+       runUp.onFalse(new InstantCommand(() -> m_Elevator.elevatorStop()));
+       runDown.onTrue(new InstantCommand(() -> m_Elevator.runDown()));
+        zeroElevatorEncoder.onTrue(new InstantCommand(() -> m_Elevator.reset()));
+        runDown.onFalse(new InstantCommand(() -> m_Elevator.elevatorStop()));
+
     }
 
     /**
