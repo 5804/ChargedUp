@@ -40,9 +40,11 @@ public class Swerve extends SubsystemBase {
   public SwerveModule[] mSwerveMods;
   public Pigeon2 gyro;
   private GenericEntry gyroAngle;
+  Limelight m_Limelight;
 
-  public Swerve() {
-    gyro = new Pigeon2(Constants.Swerve.pigeonID, "torch");
+  public Swerve(Limelight limelight) {
+    m_Limelight = limelight;
+    gyro = new Pigeon2(Constants.Swerve.pigeonID);
     gyro.configFactoryDefault();
     zeroGyro();
 
@@ -100,6 +102,28 @@ public class Swerve extends SubsystemBase {
     for (SwerveModule mod : mSwerveMods) {
       mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
     }
+  }
+
+  public void alignToGoal() {
+    drive(new Translation2d(0, m_Limelight.getSteeringValue()), 0, true, false);
+  }
+
+  public CommandBase moveToGoalAprilTags() {
+    // TODO: We probably need to add a wait here so that the pipeline has time to update
+    return runOnce(() -> m_Limelight.setToAprilTags())
+      .andThen(
+        run(() -> alignToGoal())
+          .until(() -> m_Limelight.getSteeringValue() == 0)
+      );
+  }
+
+  public CommandBase moveToGoalRetroreflective() {
+    // TODO: We probably need to add a wait here so that the pipeline has time to update
+    return runOnce(() -> m_Limelight.setToRetroreflectiveTape())
+      .andThen(
+        run(() -> alignToGoal())
+          .until(() -> m_Limelight.getSteeringValue() == 0)
+      );
   }
 
   /* Used by SwerveControllerCommand in Auto */

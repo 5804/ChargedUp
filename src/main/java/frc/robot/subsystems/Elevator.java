@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.SensorCollection;
 import com.ctre.phoenix.motorcontrol.SensorTerm;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
@@ -86,9 +87,9 @@ public class Elevator extends SubsystemBase {
     );
   }
 
-  public void runUp() {
-    mainMotor.set(TalonFXControlMode.PercentOutput, .5);
-  }
+  // public void runUp() {
+  //   mainMotor.set(TalonFXControlMode.PercentOutput, .5);
+  // }
 
   public void stop() {
     mainMotor.set(TalonFXControlMode.PercentOutput, 0);
@@ -100,11 +101,17 @@ public class Elevator extends SubsystemBase {
   //            .withName("runUp");
   //}
 
-  //public CommandBase runDown(){
-  //    return run(() -> mainMotor.set(TalonFXControlMode.PercentOutput, -.5))
-  //            .finallyDo(interrupted -> mainMotor.set(ControlMode.PercentOutput, 0.0))
-  //            .withName("runDown");
-  //}
+  public CommandBase runDown() {
+    return run(() -> mainMotor.set(TalonFXControlMode.PercentOutput, -.5))
+      .finallyDo(interrupted -> mainMotor.set(ControlMode.PercentOutput, 0.0))
+      .withName("runDown");
+  }
+
+  public CommandBase runUp() {
+    return run(() -> mainMotor.set(TalonFXControlMode.PercentOutput, .5))
+      .finallyDo(interrupted -> mainMotor.set(ControlMode.PercentOutput, 0.0))
+      .withName("runDown");
+  }
 
   public void increasePosition() {
     calculatedPosition = calculatedPosition + 1;
