@@ -37,11 +37,11 @@ public class RobotContainer {
     driver,
     XboxController.Button.kLeftBumper.value
   );
-  private final JoystickButton runUp = new JoystickButton(
+  private final JoystickButton moveToGoalAprilTags = new JoystickButton(
     driver,
     XboxController.Button.kA.value
   );
-  private final JoystickButton runDown = new JoystickButton(
+  private final JoystickButton moveToGoalRetro = new JoystickButton(
     driver,
     XboxController.Button.kB.value
   );
@@ -55,7 +55,8 @@ public class RobotContainer {
   );
 
   /* Subsystems */
-  private final Swerve s_Swerve = new Swerve();
+  private final Limelight m_Limelight = new Limelight();
+  private final Swerve s_Swerve = new Swerve(m_Limelight);
   private final Elevator m_Elevator = new Elevator();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -84,12 +85,14 @@ public class RobotContainer {
     /* Driver Buttons */
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
     // runUp.whileTrue(new RunCommand(() -> m_Elevator.increasePosition()));
-    // runDown.whileTrue(new RunCommand(() -> m_Elevator.decreasePosition()));
-    runUp.onTrue(new InstantCommand(() -> m_Elevator.setPosition()));
-    //runUp.onFalse(new InstantCommand(() -> m_Elevator.stop()));
+    // runDown.whileTrue(new RunCommand(() -> m_Elevator.runDown()));
+    // runUp.onTrue(new InstantCommand(() -> m_Elevator.runUp()));
+    // runUp.onFalse(new InstantCommand(() -> m_Elevator.stop()));
     // runDown.onFalse(new InstantCommand(() -> m_Elevator.setPosition()));
-    zeroElevatorEncoder.onTrue(new InstantCommand(() -> m_Elevator.reset()));
+    // zeroElevatorEncoder.onTrue(new InstantCommand(() -> m_Elevator.reset()));
     drive1m.onTrue(s_Swerve.drive1m());
+    moveToGoalAprilTags.onTrue(s_Swerve.moveToGoalAprilTags());
+    moveToGoalRetro.onTrue(s_Swerve.moveToGoalRetroreflective());
   }
 
   /**
