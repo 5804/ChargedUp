@@ -26,7 +26,7 @@ public class SnapToAngle extends CommandBase {
   public void initialize() {
     m_thetaController = new PIDController(0.00125, 0, 0.00125);
 
-    m_thetaController.enableContinuousInput(-180, 180);
+    m_thetaController.enableContinuousInput(-180, 180); // :(
     m_thetaController.setSetpoint(m_angle);
   }
 
@@ -34,12 +34,12 @@ public class SnapToAngle extends CommandBase {
   @Override
   public void execute() {
     double rotationVal = m_thetaController.calculate(
-      -(MathUtil.inputModulus(s_swerve.getYaw().getDegrees(), -180, 180)),
+      -(MathUtil.inputModulus(s_swerve.getYaw().getDegrees(), -180, 180)), // remainder math ?
       m_thetaController.getSetpoint()
     );
     s_swerve.drive(
       new Translation2d(0.0, 0.0),
-      rotationVal * Math.PI * 2,
+      rotationVal * (Math.PI * 2) / 360,
       true,
       false
     );

@@ -156,10 +156,10 @@ public class RobotContainer {
 
     m_autoChooser.setDefaultOption("Nothing", new InstantCommand());
 
-    m_autoChooser.addOption(
-      "Leave Community",
-      new LeaveCommunityAuto(s_Swerve, m_Elevator, m_Claw)
-    );
+    // m_autoChooser.addOption(
+    //   "Leave Community",
+    //   new LeaveCommunityAuto(s_Swerve, m_Elevator, m_Claw)
+    // );
 
     m_autoChooser.addOption(
       "Cone Then Cube",
@@ -171,23 +171,23 @@ public class RobotContainer {
       new ConeThenConeSimple(s_Swerve, m_Elevator, m_Claw)
     );
 
-    m_autoChooser.addOption(
-      "Test Left Auto",
-      new TestLeftAuto(s_Swerve, m_Elevator, m_Claw)
-    );
+    // m_autoChooser.addOption(
+    //   "Test Left Auto",
+    //   new TestLeftAuto(s_Swerve, m_Elevator, m_Claw)
+    // );
 
-    m_autoChooser.addOption(
-      "Top Cone Charge Balance",
-      new DropConeFollowPath(
-        s_Swerve,
-        m_Elevator,
-        m_Claw,
-        Constants.elevatorTopCone,
-        Constants.armTopCone,
-        "GPWithCharge",
-        true
-      )
-    );
+    // m_autoChooser.addOption(
+    //   "Top Cone Balance",
+    //   new DropConeFollowPath(
+    //     s_Swerve,
+    //     m_Elevator,
+    //     m_Claw,
+    //     Constants.elevatorTopCone,
+    //     Constants.armTopCone,
+    //     "GPWithCharge",
+    //     true
+    //   )
+    // );
 
     m_autoChooser.addOption(
       "Top Cone Mobility Balance",
@@ -228,18 +228,18 @@ public class RobotContainer {
     //   )
     // );
 
-    m_autoChooser.addOption(
-      "Top Cube Charge Balance",
-      new DropCubeFollowPath(
-        s_Swerve,
-        m_Elevator,
-        m_Claw,
-        Constants.elevatorTopCube,
-        Constants.armTopCube,
-        "GPWithCharge",
-        true
-      )
-    );
+    // m_autoChooser.addOption(
+    //   "Top Cube Charge Balance",
+    //   new DropCubeFollowPath(
+    //     s_Swerve,
+    //     m_Elevator,
+    //     m_Claw,
+    //     Constants.elevatorTopCube,
+    //     Constants.armTopCube,
+    //     "GPWithCharge",
+    //     true
+    //   )
+    // );
 
     m_autoChooser.addOption(
       "Top Cone Leave Community",
@@ -254,44 +254,44 @@ public class RobotContainer {
       )
     );
 
-    m_autoChooser.addOption(
-      "Mid Cone Leave Community",
-      new DropConeFollowPath(
-        s_Swerve,
-        m_Elevator,
-        m_Claw,
-        Constants.elevatorMidCone,
-        Constants.armMidCone,
-        "Leave",
-        false
-      )
-    );
+    // m_autoChooser.addOption(
+    //   "Mid Cone Leave Community",
+    //   new DropConeFollowPath(
+    //     s_Swerve,
+    //     m_Elevator,
+    //     m_Claw,
+    //     Constants.elevatorMidCone,
+    //     Constants.armMidCone,
+    //     "Leave",
+    //     false
+    //   )
+    // );
 
-    m_autoChooser.addOption(
-      "Top Cube Leave Community",
-      new DropCubeFollowPath(
-        s_Swerve,
-        m_Elevator,
-        m_Claw,
-        Constants.elevatorTopCube,
-        Constants.armTopCube,
-        "Leave",
-        false
-      )
-    );
+    // m_autoChooser.addOption(
+    //   "Top Cube Leave Community",
+    //   new DropCubeFollowPath(
+    //     s_Swerve,
+    //     m_Elevator,
+    //     m_Claw,
+    //     Constants.elevatorTopCube,
+    //     Constants.armTopCube,
+    //     "Leave",
+    //     false
+    //   )
+    // );
 
-    m_autoChooser.addOption(
-      "Mid Cube Leave Community",
-      new DropCubeFollowPath(
-        s_Swerve,
-        m_Elevator,
-        m_Claw,
-        Constants.elevatorMidCube,
-        Constants.armMidCube,
-        "Leave",
-        false
-      )
-    );
+    // m_autoChooser.addOption(
+    //   "Mid Cube Leave Community",
+    //   new DropCubeFollowPath(
+    //     s_Swerve,
+    //     m_Elevator,
+    //     m_Claw,
+    //     Constants.elevatorMidCube,
+    //     Constants.armMidCube,
+    //     "Leave",
+    //     false
+    //   )
+    // );
 
     SmartDashboard.putData("Auto Chooser", m_autoChooser);
 
