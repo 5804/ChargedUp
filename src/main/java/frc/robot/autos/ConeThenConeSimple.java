@@ -13,8 +13,8 @@ import frc.robot.subsystems.Swerve;
 public class ConeThenConeSimple extends SequentialCommandGroup {
 
   public ConeThenConeSimple(Swerve s_Swerve, Elevator m_Elevator, Claw m_Claw) {
-    PathPlannerTrajectory traj1 = PathPlanner.loadPath("Cone2GP", 3.5, 3);
-    PathPlannerTrajectory traj3 = PathPlanner.loadPath("GP2Cone", 3.5, 3);
+    PathPlannerTrajectory traj1 = PathPlanner.loadPath("Cone2GP", 4, 4);
+    PathPlannerTrajectory traj3 = PathPlanner.loadPath("GP2Cone", 4, 4);
     addCommands(
       m_Claw.closeAllHold(),
       m_Elevator.sequentialSetPositions(
@@ -28,10 +28,7 @@ public class ConeThenConeSimple extends SequentialCommandGroup {
       new ParallelCommandGroup(
         new SequentialCommandGroup(
           new WaitCommand(.25),
-          m_Elevator.sequentialSetPositions(
-            Constants.elevatorFloor,
-            Constants.armFloor
-          ),
+          m_Elevator.setToFloor(),
           m_Claw.openAllIn()
         ),
         new SequentialCommandGroup(

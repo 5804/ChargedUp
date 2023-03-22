@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -164,8 +165,8 @@ public class Elevator extends SubsystemBase {
       armMotor.configAllowableClosedloopError(Constants.kSlotIdx0, 20);
 
       /* Set acceleration and vcruise velocity - see documentation */
-      armMotor.configMotionCruiseVelocity(250, Constants.kTimeoutMs);
-      armMotor.configMotionAcceleration(250, Constants.kTimeoutMs);
+      armMotor.configMotionCruiseVelocity(280, Constants.kTimeoutMs);
+      armMotor.configMotionAcceleration(280, Constants.kTimeoutMs);
 
       mainMotor.configForwardSoftLimitEnable(true);
       mainMotor.configForwardSoftLimitThreshold(Constants.elevatorUpperLimit);
@@ -228,55 +229,122 @@ public class Elevator extends SubsystemBase {
     // }
   }
 
-  public CommandBase sequentialSetPositions(
-    final int elevatorPosition,
-    int armPosition
-  ) {
+  public CommandBase setToFloor() {
     mainMotor.selectProfileSlot(Constants.kSlotIdx0, Constants.kPIDLoopIdx);
     return runOnce(() ->
-        armMotor.set(TalonFXControlMode.MotionMagic, Constants.armUpperLimit)
-      )
-      .andThen(
-        Commands
-          .waitUntil(() ->
-            armMotor.getActiveTrajectoryPosition() >
-            Constants.armUpperLimit -
-            100
-          )
-          .withTimeout(1)
+        armMotor.set(
+          TalonFXControlMode.MotionMagic,
+          Constants.armUpperLimit,
+          DemandType.ArbitraryFeedForward,
+          feedForward()
+        )
       )
       .andThen(
         runOnce(() ->
           mainMotor.set(
             TalonFXControlMode.MotionMagic,
-            elevatorPosition,
+            Constants.elevatorFloor,
             DemandType.ArbitraryFeedForward,
             0.03
           )
         )
       )
       .andThen(
+        runOnce(() ->
+          armMotor.set(TalonFXControlMode.MotionMagic, Constants.armFloor)
+        )
+      )
+      .andThen(
         Commands
           .waitUntil(() ->
+            armMotor.getActiveTrajectoryPosition() < Constants.armFloor + 20 &&
+            armMotor.getActiveTrajectoryPosition() > Constants.armFloor - 20 &&
             mainMotor.getActiveTrajectoryPosition() <
-            elevatorPosition +
+            Constants.elevatorFloor +
             30000 &&
-            mainMotor.getActiveTrajectoryPosition() > elevatorPosition - 30000
+            mainMotor.getActiveTrajectoryPosition() >
+            Constants.elevatorFloor -
+            30000
           )
-          .withTimeout(1.5)
-      )
-      .andThen(
-        runOnce(() -> armMotor.set(TalonFXControlMode.MotionMagic, armPosition))
-      )
-      .andThen(
-        Commands
-          .waitUntil(() ->
-            armMotor.getActiveTrajectoryPosition() < armPosition + 20 &&
-            armMotor.getActiveTrajectoryPosition() > armPosition - 20
-          )
-          .withTimeout(1)
+          .withTimeout(2)
       )
       .andThen(runOnce(() -> this.armAndElevatorStopPercentMode()));
+  }
+
+  public CommandBase sequentialSetPositions(
+    final int elevatorPosition,
+    int armPosition
+  ) {
+    System.out.println(Swerve.mSwerveMods[0].getState().speedMetersPerSecond);
+    // if (Math.abs(Swerve.mSwerveMods[0].getState().speedMetersPerSecond) > 0) {
+    //   return new InstantCommand(() -> LED.LEDColor(256, 0, 0));
+    // } else {
+    mainMotor.selectProfileSlot(Constants.kSlotIdx0, Constants.kPIDLoopIdx);
+    return Commands.either(
+      Commands.none(),
+      runOnce(() ->
+          armMotor.set(
+            TalonFXControlMode.MotionMagic,
+            Constants.armUpperLimit,
+            DemandType.ArbitraryFeedForward,
+            feedForward()
+          )
+        )
+        .andThen(() ->
+          System.out.println(
+            Swerve.mSwerveMods[0].getState().speedMetersPerSecond
+          )
+        )
+        .andThen(
+          Commands
+            .waitUntil(() ->
+              armMotor.getActiveTrajectoryPosition() >
+              Constants.armUpperLimit -
+              100
+            )
+            .withTimeout(1)
+        )
+        .andThen(
+          runOnce(() ->
+            mainMotor.set(
+              TalonFXControlMode.MotionMagic,
+              elevatorPosition,
+              DemandType.ArbitraryFeedForward,
+              0.03
+            )
+          )
+        )
+        .andThen(
+          Commands
+            .waitUntil(() ->
+              mainMotor.getActiveTrajectoryPosition() <
+              elevatorPosition +
+              30000 &&
+              mainMotor.getActiveTrajectoryPosition() > elevatorPosition - 30000
+            )
+            .withTimeout(1.5)
+        )
+        .andThen(
+          runOnce(() ->
+            armMotor.set(TalonFXControlMode.MotionMagic, armPosition)
+          )
+        )
+        .andThen(
+          Commands
+            .waitUntil(() ->
+              armMotor.getActiveTrajectoryPosition() < armPosition + 20 &&
+              armMotor.getActiveTrajectoryPosition() > armPosition - 20
+            )
+            .withTimeout(1)
+        )
+        .andThen(runOnce(() -> this.armAndElevatorStopPercentMode())),
+      () -> {
+        return (
+          false
+          // Math.abs(Swerve.mSwerveMods[0].getState().speedMetersPerSecond) > 0
+        );
+      }
+    );
   }
 
   // Test this

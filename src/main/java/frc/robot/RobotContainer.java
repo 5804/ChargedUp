@@ -346,12 +346,7 @@ public class RobotContainer {
       xButton1.onTrue(s_Swerve.xWheelsCommand());
       // xButton1.onTrue(new SnapToAngle(s_Swerve, 0));
 
-      leftStickButton1.onTrue(
-        m_Elevator.sequentialSetPositions(
-          Constants.elevatorFloor,
-          Constants.armFloor
-        )
-      );
+      leftStickButton1.onTrue(m_Elevator.setToFloor());
 
       rightStickButton1.onTrue(m_Elevator.setStow());
 
