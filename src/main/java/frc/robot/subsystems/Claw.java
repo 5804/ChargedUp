@@ -2,18 +2,23 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.playingwithfusion.TimeOfFlight;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+
 
 public class Claw extends SubsystemBase {
 
   public DoubleSolenoid clawPiston1;
   public DoubleSolenoid clawPiston2;
   public TalonFX clawMotor;
+  public TimeOfFlight TOF;
 
   public Claw() {
     if (!Constants.mantis) {
@@ -22,6 +27,9 @@ public class Claw extends SubsystemBase {
       clawMotor = new TalonFX(4);
       clawPiston1.set(Value.kForward);
       clawPiston2.set(Value.kForward);
+
+      TOF = new TimeOfFlight(1);
+
     }
   }
 
@@ -38,10 +46,12 @@ public class Claw extends SubsystemBase {
   }
 
   public CommandBase open1In() {
-    return runOnce(() -> clawPiston1.set(Value.kForward))
+    return
+      runOnce(() -> clawPiston1.set(Value.kForward))
       .andThen(runOnce(() -> clawPiston2.set(Value.kReverse)))
       .andThen(runOnce(() -> clawMotor.set(ControlMode.PercentOutput, .5)));
-  }
+
+}
 
   public CommandBase open1Hold() {
     return runOnce(() -> clawPiston1.set(Value.kForward))
@@ -93,4 +103,12 @@ public class Claw extends SubsystemBase {
   // public CommandBase RCLOSE() {
   //   return run(() -> clawPiston2.set(Value.kReverse)); //opens R
   // }
+
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber("TOF", TOF.getRange());
+    SmartDashboard.putBoolean("TOF", TOF.getRange() < 40);
+
+
+  }
 }
