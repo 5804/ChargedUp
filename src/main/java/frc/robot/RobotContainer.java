@@ -146,6 +146,8 @@ public class RobotContainer {
   public final Elevator m_Elevator = new Elevator();
   private final Claw m_Claw = new Claw();
   private final LED m_LED = new LED();
+  private final CubeClaw m_CubeClaw = new CubeClaw(m_Claw, m_Elevator);
+  private final ConeClaw m_ConeClaw = new ConeClaw(m_Claw, m_Elevator);
 
   private SendableChooser<Command> m_autoChooser = new SendableChooser<>();
 
@@ -321,10 +323,12 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
     if (!Constants.mantis) {
-      leftBumper1.whileTrue(m_Claw.openAllIn());
-      leftBumper1.onFalse(m_Claw.open1Hold());
-      rightBumper1.whileTrue(m_Claw.open1In());
-      rightBumper1.onFalse(m_Claw.closeAllHold());
+      // leftBumper1.whileTrue(m_Claw.openAllIn());
+      // leftBumper1.onFalse(m_Claw.open1Hold());
+      leftBumper1.whileTrue(m_CubeClaw);
+      rightBumper1.whileTrue(m_ConeClaw);
+      // rightBumper1.whileTrue(m_Claw.open1In());
+      // rightBumper1.onFalse(m_Claw.closeAllHold());
 
       // leftStickButton1.onTrue(new ConditionalCommand(m_Elevator.setStow(), m_Elevator.sequentialSetPositions(
       //   Constants.elevatorFloor,

@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.playingwithfusion.TimeOfFlight;
+import com.playingwithfusion.TimeOfFlight.RangingMode;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -29,6 +30,9 @@ public class Claw extends SubsystemBase {
       clawPiston2.set(Value.kForward);
 
       TOF = new TimeOfFlight(1);
+      TOF.setRangingMode(RangingMode.Short, 30);
+    
+    
 
     }
   }
@@ -59,10 +63,39 @@ public class Claw extends SubsystemBase {
       .andThen(runOnce(() -> clawMotor.set(ControlMode.PercentOutput, 0)));
   }
 
+
   public CommandBase openAllIn() {
     return runOnce(() -> clawPiston2.set(Value.kReverse))
       .andThen(runOnce(() -> clawPiston1.set(Value.kReverse)))
       .andThen(runOnce(() -> clawMotor.set(ControlMode.PercentOutput, .2)));
+  }
+
+  public void openCube() {
+    clawPiston1.set(Value.kReverse);
+    clawPiston2.set(Value.kReverse);
+    clawMotor.set(ControlMode.PercentOutput, .5);
+  }
+
+  public void closeCube() {
+    clawPiston1.set(Value.kForward);
+    clawPiston2.set(Value.kReverse);
+    clawMotor.set(ControlMode.PercentOutput, 0);
+  }
+
+  public void openCone() {
+    clawPiston1.set(Value.kForward);
+    clawPiston2.set(Value.kReverse);
+    clawMotor.set(ControlMode.PercentOutput, .5);
+  }
+
+  public void closeCone() {
+    clawPiston1.set(Value.kForward);
+    clawPiston2.set(Value.kForward);
+    clawMotor.set(ControlMode.PercentOutput, 0);
+  }
+
+  public void TOFDistance(){
+    TOF.getRange();
   }
 
   public CommandBase openAllHold() {
