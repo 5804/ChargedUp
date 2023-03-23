@@ -50,14 +50,14 @@ public class CubeClaw extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_claw.closeCube();
+    m_Elevator.setStow();
   }
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     SmartDashboard.putNumber("TOFISFINISHED", m_claw.TOF.getRange());
     if (m_claw.TOF.getRange() < 50 && m_claw.TOF.getRange() > 5 && m_claw.TOF.isRangeValid()) {
-    m_claw.closeCube();
-    m_Elevator.setStow();
+ 
     return true;
     }
     else {
