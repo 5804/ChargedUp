@@ -70,6 +70,12 @@ public class LED extends SubsystemBase {
     candle2.animate(twinkle);
   }
 
+  public static void GreenFlow() {
+    ColorFlowAnimation colorflow = new ColorFlowAnimation(255, 0, 0);
+    candle1.animate(colorflow);
+    candle2.animate(colorflow);
+  }
+
   public static void Fire() {
     FireAnimation fireAnim = new FireAnimation();
     candle1.animate(fireAnim);
