@@ -143,11 +143,9 @@ public class RobotContainer {
   /* Subsystems */
   private final Limelight m_Limelight = new Limelight();
   public final Swerve s_Swerve = new Swerve(m_Limelight);
-  public final Elevator m_Elevator = new Elevator();
+  public static final Elevator m_Elevator = new Elevator();
   private final Claw m_Claw = new Claw();
   private final LED m_LED = new LED();
-  private final CubeClaw m_CubeClaw = new CubeClaw(m_Claw, m_Elevator);
-  private final ConeClaw m_ConeClaw = new ConeClaw(m_Claw, m_Elevator);
 
   private SendableChooser<Command> m_autoChooser = new SendableChooser<>();
 
@@ -325,8 +323,10 @@ public class RobotContainer {
     if (!Constants.mantis) {
       // leftBumper1.whileTrue(m_Claw.openAllIn());
       // leftBumper1.onFalse(m_Claw.open1Hold());
-      leftBumper1.whileTrue(m_CubeClaw);
-      rightBumper1.whileTrue(m_ConeClaw);
+      leftBumper1.whileTrue(m_Claw.openCubeCommand());
+      leftBumper1.onFalse(new InstantCommand(() -> m_Claw.closeCube()));
+      rightBumper1.whileTrue(m_Claw.openConeCommand());
+      rightBumper1.onFalse(new InstantCommand(() -> m_Claw.closeCone()));
       // rightBumper1.whileTrue(m_Claw.open1In());
       // rightBumper1.onFalse(m_Claw.closeAllHold());
 
@@ -425,6 +425,7 @@ public class RobotContainer {
         new InstantCommand(() -> {
           m_LED.LEDColor(255, 140, 0);
           m_Limelight.setToRetroreflectiveTape();
+          // m_LED.Fire();
         })
       );
       b12.onTrue(

@@ -229,6 +229,15 @@ public class Elevator extends SubsystemBase {
     // }
   }
 
+  public CommandBase StopCommand() {
+    // if (!DriverStation.isAutonomous()) {
+    return runOnce(() ->
+        armMotor.set(TalonFXControlMode.PercentOutput, feedForward())
+      )
+      .andThen(() -> mainMotor.set(TalonFXControlMode.PercentOutput, 0.03));
+    // }
+  }
+
   public CommandBase setToFloor() {
     mainMotor.selectProfileSlot(Constants.kSlotIdx0, Constants.kPIDLoopIdx);
     return runOnce(() ->
@@ -337,6 +346,12 @@ public class Elevator extends SubsystemBase {
             )
             .withTimeout(1)
         )
+        .andThen(
+          Commands.waitUntil(() ->
+            mainMotor.getActiveTrajectoryPosition() < elevatorPosition + 500 &&
+            mainMotor.getActiveTrajectoryPosition() > elevatorPosition - 500
+          )
+        )
         .andThen(runOnce(() -> this.armAndElevatorStopPercentMode())),
       () -> {
         return (
@@ -344,6 +359,18 @@ public class Elevator extends SubsystemBase {
           // Math.abs(Swerve.mSwerveMods[0].getState().speedMetersPerSecond) > 0
         );
       }
+    );
+  }
+
+  public void stowMethod() {
+    mainMotor.selectProfileSlot(Constants.kSlotIdx1, Constants.kPIDLoopIdx);
+    armMotor.set(TalonFXControlMode.MotionMagic, Constants.armUpperLimit);
+    armMotor.configForwardSoftLimitThreshold(Constants.armStow);
+    mainMotor.set(
+      TalonFXControlMode.MotionMagic,
+      Constants.elevatorStow,
+      DemandType.ArbitraryFeedForward,
+      0.03
     );
   }
 

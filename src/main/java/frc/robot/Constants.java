@@ -36,7 +36,7 @@ public final class Constants {
   public static final int elevatorMidCube = 41381;
   public static final int elevatorStow = 0;
   public static final int elevatorFloor = 21477;
-  public static final int elevatorShelf = 91340;
+  public static final int elevatorShelf = 82153;
 
   // arm constants
   public static final int armUpperLimit = 1400; // DO NOT TOUCH
@@ -50,7 +50,7 @@ public final class Constants {
   public static final int armMidCube = 1334;
   public static final int armStow = 1675;
   public static final int armFloor = 461;
-  public static final int armShelf = 1040;
+  public static final int armShelf = 1398;
 
   //arm feed forward
   public static final int horizontalPos = 870;

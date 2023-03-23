@@ -4,15 +4,18 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.playingwithfusion.TimeOfFlight;
 import com.playingwithfusion.TimeOfFlight.RangingMode;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants;
-
+import frc.robot.RobotContainer;
 
 public class Claw extends SubsystemBase {
 
@@ -31,9 +34,6 @@ public class Claw extends SubsystemBase {
 
       TOF = new TimeOfFlight(1);
       TOF.setRangingMode(RangingMode.Short, 30);
-    
-    
-
     }
   }
 
@@ -50,19 +50,16 @@ public class Claw extends SubsystemBase {
   }
 
   public CommandBase open1In() {
-    return
-      runOnce(() -> clawPiston1.set(Value.kForward))
+    return runOnce(() -> clawPiston1.set(Value.kForward))
       .andThen(runOnce(() -> clawPiston2.set(Value.kReverse)))
       .andThen(runOnce(() -> clawMotor.set(ControlMode.PercentOutput, .5)));
-
-}
+  }
 
   public CommandBase open1Hold() {
     return runOnce(() -> clawPiston1.set(Value.kForward))
       .andThen(runOnce(() -> clawPiston2.set(Value.kReverse)))
       .andThen(runOnce(() -> clawMotor.set(ControlMode.PercentOutput, 0)));
   }
-
 
   public CommandBase openAllIn() {
     return runOnce(() -> clawPiston2.set(Value.kReverse))
@@ -88,13 +85,37 @@ public class Claw extends SubsystemBase {
     clawMotor.set(ControlMode.PercentOutput, .5);
   }
 
+  public CommandBase openConeCommand() {
+    return runOnce(() -> openCone())
+      .andThen(Commands.waitUntil(() -> TOF.getRange() < 70))
+      .andThen(() -> closeCone())
+      .andThen(() -> LED.Twinkle())
+      .andThen(RobotContainer.m_Elevator.setStow())
+      .andThen(() -> LED.Rainbow())
+      .finallyDo(interrupted ->
+        RobotContainer.m_Elevator.armAndElevatorStopPercentMode()
+      );
+  }
+
+  public CommandBase openCubeCommand() {
+    return runOnce(() -> openCube())
+      .andThen(Commands.waitUntil(() -> TOF.getRange() < 70))
+      .andThen(() -> closeCube())
+      .andThen(() -> LED.Twinkle())
+      .andThen(RobotContainer.m_Elevator.setStow())
+      .andThen(() -> LED.Rainbow())
+      .finallyDo(interrupted ->
+        RobotContainer.m_Elevator.armAndElevatorStopPercentMode()
+      );
+  }
+
   public void closeCone() {
     clawPiston1.set(Value.kForward);
     clawPiston2.set(Value.kForward);
     clawMotor.set(ControlMode.PercentOutput, 0);
   }
 
-  public void TOFDistance(){
+  public void TOFDistance() {
     TOF.getRange();
   }
 
@@ -121,6 +142,7 @@ public class Claw extends SubsystemBase {
       .andThen(runOnce(() -> clawPiston2.set(Value.kForward)))
       .andThen(runOnce(() -> clawMotor.set(ControlMode.PercentOutput, 0)));
   }
+
   // public CommandBase LOPEN() {
   //   return run(() -> clawPiston1.set(Value.kForward)); //closes L
   // }
@@ -141,7 +163,5 @@ public class Claw extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("TOF", TOF.getRange());
     SmartDashboard.putBoolean("TOF", TOF.getRange() < 40);
-
-
   }
 }
