@@ -145,7 +145,7 @@ public class RobotContainer {
   public final Swerve s_Swerve = new Swerve(m_Limelight);
   public static final Elevator m_Elevator = new Elevator();
   private final Claw m_Claw = new Claw();
-  private final LED m_LED = new LED();
+  public static final LED m_LED = new LED();
 
   private SendableChooser<Command> m_autoChooser = new SendableChooser<>();
 

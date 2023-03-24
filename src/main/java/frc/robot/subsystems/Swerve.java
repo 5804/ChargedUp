@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.SwerveModule;
 
 public class Swerve extends SubsystemBase {
@@ -47,7 +48,6 @@ public class Swerve extends SubsystemBase {
   public Swerve(Limelight limelight) {
     m_Limelight = limelight;
     gyro = new Pigeon2(Constants.Swerve.pigeonID, "torch");
-  
 
     gyro.configFactoryDefault();
     zeroGyro();
@@ -165,6 +165,7 @@ public class Swerve extends SubsystemBase {
     mSwerveMods[3].setAngle(
         new SwerveModuleState(0.1, new Rotation2d(-(3 * Math.PI) / 4))
       );
+    LED.Fire();
   }
 
   public CommandBase xWheelsCommand() {

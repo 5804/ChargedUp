@@ -92,7 +92,6 @@ public class Claw extends SubsystemBase {
       .andThen(() -> closeCone())
       .andThen(() -> LED.GreenFlow())
       .andThen(RobotContainer.m_Elevator.setStow())
-      .andThen(() -> LED.Rainbow())
       .finallyDo(interrupted -> {
         closeCone();
         RobotContainer.m_Elevator.armAndElevatorStopPercentMode();
@@ -105,7 +104,6 @@ public class Claw extends SubsystemBase {
       .andThen(() -> closeCube())
       .andThen(() -> LED.GreenFlow())
       .andThen(RobotContainer.m_Elevator.setStow())
-      .andThen(() -> LED.Rainbow())
       .finallyDo(interrupted -> {
         closeCone();
         RobotContainer.m_Elevator.armAndElevatorStopPercentMode();
