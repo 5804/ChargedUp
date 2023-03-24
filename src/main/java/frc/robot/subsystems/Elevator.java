@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 
 public class Elevator extends SubsystemBase {
@@ -29,6 +30,7 @@ public class Elevator extends SubsystemBase {
   public double calculatedPOutput = 0;
   public double motorPosition;
   public int smoothing = 0;
+  public boolean isStowing = false;
   int upTargetPos = 10000;
   int downTargetPosition = 100;
   int count = 0;
@@ -229,6 +231,10 @@ public class Elevator extends SubsystemBase {
     // }
   }
 
+  public boolean isStowing() {
+    return isStowing;
+  }
+
   public CommandBase StopCommand() {
     // if (!DriverStation.isAutonomous()) {
     return runOnce(() ->
@@ -376,10 +382,12 @@ public class Elevator extends SubsystemBase {
 
   // Test this
   public CommandBase setStow() {
+    isStowing = true;
     mainMotor.selectProfileSlot(Constants.kSlotIdx1, Constants.kPIDLoopIdx);
     return runOnce(() ->
         armMotor.set(TalonFXControlMode.MotionMagic, Constants.armUpperLimit)
       )
+      .andThen(new WaitCommand(.25))
       // .andThen(
       //   Commands
       // .waitUntil(() ->
@@ -438,7 +446,8 @@ public class Elevator extends SubsystemBase {
         )
       )
       // ) //set soft limit back to what it was
-      .andThen(runOnce(() -> this.armAndElevatorStopPercentMode()));
+      .andThen(runOnce(() -> this.armAndElevatorStopPercentMode()))
+      .andThen(() -> isStowing = false);
   }
 
   @Override

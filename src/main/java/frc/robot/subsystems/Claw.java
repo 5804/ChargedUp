@@ -7,6 +7,7 @@ import com.playingwithfusion.TimeOfFlight.RangingMode;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -89,24 +90,26 @@ public class Claw extends SubsystemBase {
     return runOnce(() -> openCone())
       .andThen(Commands.waitUntil(() -> TOF.getRange() < 70))
       .andThen(() -> closeCone())
-      .andThen(() -> LED.Twinkle())
+      .andThen(() -> LED.GreenFlow())
       .andThen(RobotContainer.m_Elevator.setStow())
       .andThen(() -> LED.Rainbow())
-      .finallyDo(interrupted ->
-        RobotContainer.m_Elevator.armAndElevatorStopPercentMode()
-      );
+      .finallyDo(interrupted -> {
+        closeCone();
+        RobotContainer.m_Elevator.armAndElevatorStopPercentMode();
+      });
   }
 
   public CommandBase openCubeCommand() {
     return runOnce(() -> openCube())
       .andThen(Commands.waitUntil(() -> TOF.getRange() < 70))
       .andThen(() -> closeCube())
-      .andThen(() -> LED.Twinkle())
+      .andThen(() -> LED.GreenFlow())
       .andThen(RobotContainer.m_Elevator.setStow())
       .andThen(() -> LED.Rainbow())
-      .finallyDo(interrupted ->
-        RobotContainer.m_Elevator.armAndElevatorStopPercentMode()
-      );
+      .finallyDo(interrupted -> {
+        closeCone();
+        RobotContainer.m_Elevator.armAndElevatorStopPercentMode();
+      });
   }
 
   public void closeCone() {

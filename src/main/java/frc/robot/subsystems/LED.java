@@ -71,7 +71,7 @@ public class LED extends SubsystemBase {
   }
 
   public static void GreenFlow() {
-    ColorFlowAnimation colorflow = new ColorFlowAnimation(255, 0, 0);
+    ColorFlowAnimation colorflow = new ColorFlowAnimation(0, 255, 0);
     candle1.animate(colorflow);
     candle2.animate(colorflow);
   }
@@ -88,9 +88,10 @@ public class LED extends SubsystemBase {
   public void periodic() {
     if (!DriverStation.getJoystickIsXbox(0)) {
       DriverStation.reportError("Rescan!!!!", false);
-      ColorFlowAnimation color = new ColorFlowAnimation(255, 0, 0);
-      candle1.animate(color);
-      candle2.animate(color);
+      candle1.animate(null);
+      candle2.animate(null);
+      candle1.setLEDs(255, 0, 0);
+      candle2.setLEDs(255, 0, 0);
       greenDebounce = false;
     } else {
       if (greenDebounce == false) {

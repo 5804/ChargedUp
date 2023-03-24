@@ -324,9 +324,9 @@ public class RobotContainer {
       // leftBumper1.whileTrue(m_Claw.openAllIn());
       // leftBumper1.onFalse(m_Claw.open1Hold());
       leftBumper1.whileTrue(m_Claw.openCubeCommand());
-      leftBumper1.onFalse(new InstantCommand(() -> m_Claw.closeCube()));
+      leftBumper1.onFalse(m_Elevator.setStow());
       rightBumper1.whileTrue(m_Claw.openConeCommand());
-      rightBumper1.onFalse(new InstantCommand(() -> m_Claw.closeCone()));
+      rightBumper1.onFalse(m_Elevator.setStow());
       // rightBumper1.whileTrue(m_Claw.open1In());
       // rightBumper1.onFalse(m_Claw.closeAllHold());
 
