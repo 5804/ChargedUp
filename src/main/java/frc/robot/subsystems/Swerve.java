@@ -140,19 +140,47 @@ public class Swerve extends SubsystemBase {
   }
 
   public void xWheels() { //2 1 0 3, BL, FR, FL, BR
-    mSwerveMods[0].setAngle(
-        new SwerveModuleState(0.1, new Rotation2d(3 * (Math.PI) / 4))
-      );
     // new xWheels, wheel optimized:
 
     // if (mSwerveMods[0].getState().angle.getRadians() > 0) {}
     // mSwerveMods[0].setAngle(
-    //     new SwerveModuleState(0.1, new Rotation2d(mSwerveMods[0].getState().angle.getRadians() - mSwerveMods[0].getState().angle.getRadians() % 2*Math.PI + (3 * (Math.PI) / 4)));
+    //     new SwerveModuleState(0.1, new Rotation2d(mSwerveMods[0].getState().angle.getRadians() - mSwerveMods[0].getState().angle.getRadians() % 2*Math.PI + (3 * (Math.PI) / 4))))
     //   );
     // if (mSwerveMods[0].getState().angle.getRadians() < 0) {}
     // mSwerveMods[0].setAngle(
-    //     new SwerveModuleState(0.1, new Rotation2d(mSwerveMods[0].getState().angle.getRadians()  mSwerveMods[0].getState().angle.getRadians() % 2*Math.PI - (3 * (Math.PI) / 4)));
+    //     new SwerveModuleState(0.1, new Rotation2d(mSwerveMods[0].getState().angle.getRadians()  mSwerveMods[0].getState().angle.getRadians() % 2*Math.PI - (3 * (Math.PI) / 4))))
     //   );
+
+    //  if (mSwerveMods[1].getState().angle.getRadians() > 0) {}
+    // mSwerveMods[1].setAngle(
+    //     new SwerveModuleState(0.1, new Rotation2d(mSwerveMods[1].getState().angle.getRadians() - mSwerveMods[1].getState().angle.getRadians() % 2*Math.PI + (-(Math.PI) / 4))))
+    //   );
+    // if (mSwerveMods[1].getState().angle.getRadians() < 0) {}
+    // mSwerveMods[1].setAngle(
+    //     new SwerveModuleState(0.1, new Rotation2d(mSwerveMods[1].getState().angle.getRadians()  mSwerveMods[1].getState().angle.getRadians() % 2*Math.PI - (-(Math.PI) / 4))))
+    //   );
+
+    //  if (mSwerveMods[2].getState().angle.getRadians() > 0) {}
+    // mSwerveMods[2].setAngle(
+    //     new SwerveModuleState(0.1, new Rotation2d(mSwerveMods[2].getState().angle.getRadians() - mSwerveMods[2].getState().angle.getRadians() % 2*Math.PI + ((Math.PI) / 4))))
+    //   );
+    // if (mSwerveMods[2].getState().angle.getRadians() < 0) {}
+    // mSwerveMods[2].setAngle(
+    //     new SwerveModuleState(0.1, new Rotation2d(mSwerveMods[2].getState().angle.getRadians()  mSwerveMods[2].getState().angle.getRadians() % 2*Math.PI - ((Math.PI) / 4))))
+    //   );
+
+    //  if (mSwerveMods[3].getState().angle.getRadians() > 0) {}
+    // mSwerveMods[3].setAngle(
+    //     new SwerveModuleState(0.1, new Rotation2d(mSwerveMods[3].getState().angle.getRadians() - mSwerveMods[3].getState().angle.getRadians() % 2*Math.PI + (-(3 * Math.PI) / 4))))
+    //   );
+    // if (mSwerveMods[3].getState().angle.getRadians() < 0) {}
+    // mSwerveMods[3].setAngle(
+    //     new SwerveModuleState(0.1, new Rotation2d(mSwerveMods[3].getState().angle.getRadians()  mSwerveMods[3].getState().angle.getRadians() % 2*Math.PI - (-(3 * Math.PI) / 4))))
+    //   );
+
+    mSwerveMods[0].setAngle(
+        new SwerveModuleState(0.1, new Rotation2d(3 * (Math.PI) / 4))
+      );
 
     mSwerveMods[1].setAngle(
         new SwerveModuleState(0.1, new Rotation2d(-(Math.PI) / 4))

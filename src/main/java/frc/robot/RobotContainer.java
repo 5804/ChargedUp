@@ -171,6 +171,16 @@ public class RobotContainer {
       new ConeThenConeSimple(s_Swerve, m_Elevator, m_Claw)
     );
 
+    m_autoChooser.addOption(
+      "Cone Then Cone ALT",
+      new ConeThenConeSimple2(s_Swerve, m_Elevator, m_Claw)
+    );
+
+    m_autoChooser.addOption(
+      "Cone Then Grab ALT",
+      new ConeThenGrabCone2(s_Swerve, m_Elevator, m_Claw)
+    );
+
     // m_autoChooser.addOption(
     //   "Test Left Auto",
     //   new TestLeftAuto(s_Swerve, m_Elevator, m_Claw)

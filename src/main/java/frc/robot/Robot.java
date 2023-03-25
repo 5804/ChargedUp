@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.LED;
 // import frc.robot.subsystems.LED;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Swerve;
@@ -70,6 +71,7 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
     m_robotContainer.m_Elevator.armAndElevatorStopPercentMode();
     Swerve.resetModulesToAbsolute();
+    LED.Fire();
   }
 
   @Override

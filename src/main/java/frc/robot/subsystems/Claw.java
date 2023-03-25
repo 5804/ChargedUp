@@ -88,7 +88,11 @@ public class Claw extends SubsystemBase {
 
   public CommandBase openConeCommand() {
     return runOnce(() -> openCone())
-      .andThen(Commands.waitUntil(() -> TOF.getRange() < 70))
+      .andThen(
+        Commands.waitUntil(() ->
+          TOF.getRange() < 70 && TOF.getRange() > 10 && TOF.isRangeValid()
+        )
+      )
       .andThen(() -> closeCone())
       .andThen(() -> LED.GreenFlow())
       .andThen(RobotContainer.m_Elevator.setStow())
@@ -100,7 +104,11 @@ public class Claw extends SubsystemBase {
 
   public CommandBase openCubeCommand() {
     return runOnce(() -> openCube())
-      .andThen(Commands.waitUntil(() -> TOF.getRange() < 70))
+      .andThen(
+        Commands.waitUntil(() ->
+          TOF.getRange() < 70 && TOF.getRange() > 10 && TOF.isRangeValid()
+        )
+      )
       .andThen(() -> closeCube())
       .andThen(() -> LED.GreenFlow())
       .andThen(RobotContainer.m_Elevator.setStow())
