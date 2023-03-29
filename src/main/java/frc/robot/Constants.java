@@ -25,18 +25,18 @@ public final class Constants {
   //1655
 
   // elevator constants
-  public static final int elevatorUpperLimit = 130000;
+  public static final int elevatorUpperLimit = 97733;
   // this is used to set a threshold where the arm position needs to be considered
-  public static final int elevatorLowerThreshold = 60000;
+  public static final int elevatorLowerThreshold = 50000;
   // set height for elevator pos 1
-  public static final int elevatorTopCone = 129200;
+  public static final int elevatorTopCone = 97733;
   // set height for elevator pos 2
-  public static final int elevatorMidCone = 79960;
-  public static final int elevatorTopCube = 97542;
-  public static final int elevatorMidCube = 41381;
+  public static final int elevatorMidCone = 62000;
+  public static final int elevatorTopCube = 79731;
+  public static final int elevatorMidCube = 45811;
   public static final int elevatorStow = 0;
-  public static final int elevatorFloor = 21477;
-  public static final int elevatorShelf = 89161;
+  public static final int elevatorFloor = 16499;
+  public static final int elevatorShelf = 63166;
 
   // arm constants
   public static final int armUpperLimit = 1400; // DO NOT TOUCH
@@ -49,7 +49,7 @@ public final class Constants {
   public static final int armTopCube = 1013;
   public static final int armMidCube = 1334;
   public static final int armStow = 1675;
-  public static final int armFloor = 461;
+  public static final int armFloor = 529;
   public static final int armShelf = 1120;
 
   //arm feed forward
@@ -166,7 +166,7 @@ public final class Constants {
       public static int driveMotorID = 12;
       public static int angleMotorID = 11;
       public static int canCoderID = 10;
-      public static Rotation2d angleOffset = Rotation2d.fromDegrees(192.21);
+      public static Rotation2d angleOffset = Rotation2d.fromDegrees(190);
       public static SwerveModuleConstants constants = new SwerveModuleConstants(
         driveMotorID,
         angleMotorID,
@@ -211,7 +211,7 @@ public final class Constants {
       public static int driveMotorID = 32;
       public static int angleMotorID = 31;
       public static int canCoderID = 30;
-      public static Rotation2d angleOffset = Rotation2d.fromDegrees(43.59);
+      public static Rotation2d angleOffset = Rotation2d.fromDegrees(44.91);
       public static SwerveModuleConstants constants = new SwerveModuleConstants(
         driveMotorID,
         angleMotorID,

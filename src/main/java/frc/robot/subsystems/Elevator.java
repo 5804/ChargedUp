@@ -91,7 +91,7 @@ public class Elevator extends SubsystemBase {
 
       followerMotor.follow(mainMotor); //set the follower motor to mimic the mainmotor
 
-      followerMotor.setInverted(TalonFXInvertType.CounterClockwise); // motors need to be inverted from each other as they face opposite ways.  We need to determine if positive is up or down on the elevator.
+      followerMotor.setInverted(TalonFXInvertType.Clockwise); // motors need to be inverted from each other as they face opposite ways.  We need to determine if positive is up or down on the elevator.
       mainMotor.setInverted(TalonFXInvertType.Clockwise);
       mainMotor.setNeutralMode(NeutralMode.Brake);
       followerMotor.setNeutralMode(NeutralMode.Brake);
@@ -121,8 +121,16 @@ public class Elevator extends SubsystemBase {
 
       /* Set Motion Magic gains in slot0 - see documentation */
 
-      mainMotor.config_kF(Constants.kSlotIdx0, 0.060176, Constants.kTimeoutMs);
-      mainMotor.config_kP(Constants.kSlotIdx0, 0.2, Constants.kTimeoutMs);
+      mainMotor.config_kF(
+        Constants.kSlotIdx0,
+        0.07139993,
+        Constants.kTimeoutMs
+      );
+      mainMotor.config_kP(
+        Constants.kSlotIdx0,
+        0.15000010,
+        Constants.kTimeoutMs
+      );
       mainMotor.config_kI(Constants.kSlotIdx0, 0, Constants.kTimeoutMs);
       mainMotor.config_kD(Constants.kSlotIdx0, 0, Constants.kTimeoutMs);
       mainMotor.config_IntegralZone(Constants.kSlotIdx0, 200);
@@ -130,16 +138,16 @@ public class Elevator extends SubsystemBase {
 
       /* Set Motion Magic gains in slot1 - see documentation */
       mainMotor.selectProfileSlot(Constants.kSlotIdx1, Constants.kPIDLoopIdx);
-      mainMotor.config_kF(Constants.kSlotIdx1, 0.060176, Constants.kTimeoutMs);
-      mainMotor.config_kP(Constants.kSlotIdx1, 0.2, Constants.kTimeoutMs);
+      mainMotor.config_kF(Constants.kSlotIdx1, 0.0714, Constants.kTimeoutMs);
+      mainMotor.config_kP(Constants.kSlotIdx1, 0.1, Constants.kTimeoutMs);
       mainMotor.config_kI(Constants.kSlotIdx1, 0, Constants.kTimeoutMs);
       mainMotor.config_kD(Constants.kSlotIdx1, 0, Constants.kTimeoutMs);
       mainMotor.config_IntegralZone(Constants.kSlotIdx1, 200);
       mainMotor.configAllowableClosedloopError(Constants.kSlotIdx1, 100);
 
       /* Set acceleration and vcruise velocity - see documentation */
-      mainMotor.configMotionCruiseVelocity(17000, Constants.kTimeoutMs);
-      mainMotor.configMotionAcceleration(17000, Constants.kTimeoutMs);
+      mainMotor.configMotionCruiseVelocity(13000, Constants.kTimeoutMs);
+      mainMotor.configMotionAcceleration(13000, Constants.kTimeoutMs);
 
       armMotor.setStatusFramePeriod(
         StatusFrameEnhanced.Status_13_Base_PIDF0,
@@ -203,7 +211,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public CommandBase runUp() {
-    return run(() -> mainMotor.set(TalonFXControlMode.PercentOutput, 0.27))
+    return run(() -> mainMotor.set(TalonFXControlMode.PercentOutput, .2))
       .finallyDo(interrupted -> mainMotor.set(ControlMode.PercentOutput, 0.03))
       .withName("runUp");
   }

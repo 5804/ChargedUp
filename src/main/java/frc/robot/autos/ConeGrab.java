@@ -10,9 +10,9 @@ import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Swerve;
 
-public class ConeThenGrab extends SequentialCommandGroup {
+public class ConeGrab extends SequentialCommandGroup {
 
-  public ConeThenGrab(Swerve s_Swerve, Elevator m_Elevator, Claw m_Claw) {
+  public ConeGrab(Swerve s_Swerve, Elevator m_Elevator, Claw m_Claw) {
     PathPlannerTrajectory traj1 = PathPlanner.loadPath("Cone2GP", 4, 4);
     addCommands(
       m_Claw.closeAllHold(),

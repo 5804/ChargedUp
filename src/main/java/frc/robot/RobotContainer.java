@@ -29,8 +29,8 @@ public class RobotContainer {
   public final XboxController driver1 = new XboxController(0);
   private final Joystick buttonBoard = new Joystick(1); //maybe 2 idk fix the ports
   private final Joystick driver2 = new Joystick(2);
-  Trigger exampleTrigger = new Trigger(() -> driver1.getLeftTriggerAxis() > 0.5
-  );
+  Trigger leftTrigger = new Trigger(() -> driver1.getLeftTriggerAxis() > 0.5);
+  Trigger rightTrigger = new Trigger(() -> driver1.getRightTriggerAxis() > 0.5);
   /* Drive Controls */
   private final int translationAxis = XboxController.Axis.kLeftY.value;
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
@@ -141,7 +141,7 @@ public class RobotContainer {
   Trigger bbStickB = new Trigger(() -> buttonBoard.getRawAxis(1) < -0.7);
 
   /* Subsystems */
-  private final Limelight m_Limelight = new Limelight();
+  public final Limelight m_Limelight = new Limelight();
   public final Swerve s_Swerve = new Swerve(m_Limelight);
   public static final Elevator m_Elevator = new Elevator();
   private final Claw m_Claw = new Claw();
@@ -156,152 +156,50 @@ public class RobotContainer {
 
     m_autoChooser.setDefaultOption("Nothing", new InstantCommand());
 
-    // m_autoChooser.addOption(
-    //   "Leave Community",
-    //   new LeaveCommunityAuto(s_Swerve, m_Elevator, m_Claw)
-    // );
-
     m_autoChooser.addOption(
-      "Cone Then Cube",
-      new ConeThenCubeSimple(s_Swerve, m_Elevator, m_Claw)
+      "Cone/Mobility/Balance",
+      new ConeMBalance(s_Swerve, m_Elevator, m_Claw)
     );
 
     m_autoChooser.addOption(
-      "Cone Then Cone",
-      new ConeThenConeSimple(s_Swerve, m_Elevator, m_Claw)
+      "Cube/Mobility/Balance",
+      new CubeMBalance(s_Swerve, m_Elevator, m_Claw)
     );
 
     m_autoChooser.addOption(
-      "Cone Then Cone ALT",
-      new ConeThenConeSimple2(s_Swerve, m_Elevator, m_Claw)
+      "2 Cone",
+      new ConeCone(s_Swerve, m_Elevator, m_Claw, m_Limelight)
     );
 
     m_autoChooser.addOption(
-      "Cone Then Grab ALT",
-      new ConeThenGrabCone2(s_Swerve, m_Elevator, m_Claw)
-    );
-
-    // m_autoChooser.addOption(
-    //   "Test Left Auto",
-    //   new TestLeftAuto(s_Swerve, m_Elevator, m_Claw)
-    // );
-
-    // m_autoChooser.addOption(
-    //   "Top Cone Balance",
-    //   new DropConeFollowPath(
-    //     s_Swerve,
-    //     m_Elevator,
-    //     m_Claw,
-    //     Constants.elevatorTopCone,
-    //     Constants.armTopCone,
-    //     "GPWithCharge",
-    //     true
-    //   )
-    // );
-
-    m_autoChooser.addOption(
-      "Top Cone Mobility Balance",
-      new DropConeFollowPath(
-        s_Swerve,
-        m_Elevator,
-        m_Claw,
-        Constants.elevatorTopCone,
-        Constants.armTopCone,
-        "GPMobilityCharge",
-        true
-      )
+      "2 Cone (WALL)",
+      new ConeCone(s_Swerve, m_Elevator, m_Claw, m_Limelight)
     );
 
     m_autoChooser.addOption(
-      "Top Cone Then Grab Piece",
-      new DropConeFollowPath(
-        s_Swerve,
-        m_Elevator,
-        m_Claw,
-        Constants.elevatorTopCone,
-        Constants.armTopCone,
-        "Cone2GP",
-        false
-      )
+      "Cone/Grab Cone",
+      new ConeGrab(s_Swerve, m_Elevator, m_Claw)
     );
-
-    // m_autoChooser.addOption(
-    //   "Cone Then Cube",
-    //   new DropConeFollowPath(
-    //     s_Swerve,
-    //     m_Elevator,
-    //     m_Claw,
-    //     Constants.elevatorTopCone,
-    //     Constants.armTopCone,
-    //     "ConeThenCube",
-    //     true
-    //   )
-    // );
-
-    // m_autoChooser.addOption(
-    //   "Top Cube Charge Balance",
-    //   new DropCubeFollowPath(
-    //     s_Swerve,
-    //     m_Elevator,
-    //     m_Claw,
-    //     Constants.elevatorTopCube,
-    //     Constants.armTopCube,
-    //     "GPWithCharge",
-    //     true
-    //   )
-    // );
 
     m_autoChooser.addOption(
-      "Top Cone Leave Community",
-      new DropConeFollowPath(
-        s_Swerve,
-        m_Elevator,
-        m_Claw,
-        Constants.elevatorTopCone,
-        Constants.armTopCone,
-        "Leave",
-        false
-      )
+      "Cone/Grab Cone (WALL)",
+      new ConeGrabWALL(s_Swerve, m_Elevator, m_Claw)
     );
 
-    // m_autoChooser.addOption(
-    //   "Mid Cone Leave Community",
-    //   new DropConeFollowPath(
-    //     s_Swerve,
-    //     m_Elevator,
-    //     m_Claw,
-    //     Constants.elevatorMidCone,
-    //     Constants.armMidCone,
-    //     "Leave",
-    //     false
-    //   )
-    // );
+    m_autoChooser.addOption(
+      "Cone/Grab/Balance",
+      new ConeGrabBalance(s_Swerve, m_Elevator, m_Claw, m_Limelight)
+    );
 
-    // m_autoChooser.addOption(
-    //   "Top Cube Leave Community",
-    //   new DropCubeFollowPath(
-    //     s_Swerve,
-    //     m_Elevator,
-    //     m_Claw,
-    //     Constants.elevatorTopCube,
-    //     Constants.armTopCube,
-    //     "Leave",
-    //     false
-    //   )
-    // );
+    m_autoChooser.addOption(
+      "Cube/Grab/Balance",
+      new CubeGrabBalance(s_Swerve, m_Elevator, m_Claw, m_Limelight)
+    );
 
-    // m_autoChooser.addOption(
-    //   "Mid Cube Leave Community",
-    //   new DropCubeFollowPath(
-    //     s_Swerve,
-    //     m_Elevator,
-    //     m_Claw,
-    //     Constants.elevatorMidCube,
-    //     Constants.armMidCube,
-    //     "Leave",
-    //     false
-    //   )
-    // );
+    m_autoChooser.addOption(
+      "Leave Community",
+      new Leave(s_Swerve, m_Elevator, m_Claw)
+    );
 
     SmartDashboard.putData("Auto Chooser", m_autoChooser);
 
@@ -351,18 +249,26 @@ public class RobotContainer {
       aButton1.onFalse(m_Claw.motorOff());
       bButton1.onTrue(m_Claw.openAllDrop());
 
-      // xButton1.onTrue(s_Swerve.moveToGoalRetroreflective());
+      xButton1.onTrue(s_Swerve.moveToGoal());
 
       // yButton1.onTrue(s_Swerve.moveToGoalAprilTags());
 
       // xButton1.whileTrue(new RunCommand(s_Swerve::autoBalance, s_Swerve));
 
-      xButton1.onTrue(s_Swerve.xWheelsCommand());
+      // xButton1.onTrue(s_Swerve.xWheelsCommand());
       // xButton1.onTrue(new SnapToAngle(s_Swerve, 0));
+      // xButton1.onTrue(s_Swerve.alignToGoal());
 
       leftStickButton1.onTrue(m_Elevator.setToFloor());
 
       rightStickButton1.onTrue(m_Elevator.setStow());
+
+      rightTrigger.onTrue(
+        m_Elevator.sequentialSetPositions(
+          Constants.elevatorShelf,
+          Constants.armShelf
+        )
+      );
 
       //Elevator Arm Presets
       b1.onTrue(

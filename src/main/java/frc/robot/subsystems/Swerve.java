@@ -26,9 +26,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.SwerveModule;
+import frc.robot.commands.SnapToAngle;
 
 public class Swerve extends SubsystemBase {
 
@@ -236,8 +238,11 @@ public class Swerve extends SubsystemBase {
   // }
 
   public CommandBase moveToGoal() {
-    return run(() -> alignToGoal())
-      .until(() -> m_Limelight.getSteeringValue() == 0)
+    return new SnapToAngle(this, 0.0)
+      .andThen(
+        run(() -> alignToGoal())
+          .until(() -> m_Limelight.getSteeringValue() == 0)
+      )
       .withTimeout(1)
       .andThen(() -> drive(new Translation2d(0, 0), 0, true, false));
   }
