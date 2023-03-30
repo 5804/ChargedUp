@@ -10,12 +10,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.Constants;
-import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.LED;
 // import frc.robot.subsystems.LED;
-import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Swerve;
 
 /**
@@ -41,7 +37,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     ctreConfigs = new CTREConfigs();
-    Constants.confirmMantisConstants();
     // LED.CANdleSystem();
     PathPlannerServer.startServer(5811); // 5811 = port number. adjust this according to your needs
     CameraServer.startAutomaticCapture();

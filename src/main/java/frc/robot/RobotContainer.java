@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -26,6 +24,7 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
 
   /* Controllers */
+  //ok
   public final XboxController driver1 = new XboxController(0);
   private final Joystick buttonBoard = new Joystick(1); //maybe 2 idk fix the ports
   private final Joystick driver2 = new Joystick(2);
@@ -36,7 +35,7 @@ public class RobotContainer {
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private final int rotationAxis = XboxController.Axis.kRightX.value;
 
-  /* Driver Buttons */
+  /* Driver Buttons :) */
   private final JoystickButton back1 = new JoystickButton(
     driver1,
     XboxController.Button.kBack.value
@@ -328,25 +327,4 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
     return m_autoChooser.getSelected();
   }
-
-  public class LeftTriggerPressed extends JoystickButton {
-
-    public LeftTriggerPressed(GenericHID joystick, int buttonNumber) {
-      super(joystick, buttonNumber);
-      //TODO Auto-generated constructor stub
-    }
-    // @Override
-    // public boolean getAsBoolean() {
-    //   return driver1.getRawAxis(2) < -0.5;
-    //   // This returns whether the trigger is active
-    // }
-  }
-  // public class RightTriggerPressed extends Trigger {
-
-  //   @Override
-  //   public boolean getAsBoolean() {
-  //     return driver1.getRawAxis(3) > 0.5;
-  //     // This returns whether the trigger is active
-  //   }
-  // }
 }

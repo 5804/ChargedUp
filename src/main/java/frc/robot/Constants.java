@@ -17,7 +17,6 @@ public final class Constants {
   public static final int CANdleID1 = 1;
   public static final int CANdleID2 = 2;
 
-  public static final boolean mantis = false;
   public static final double LIMELIGHT_DEADBAND = 0.15;
   public static final double MIN_STEER_K = .05;
 
@@ -238,67 +237,5 @@ public final class Constants {
       kMaxAngularSpeedRadiansPerSecond,
       kMaxAngularSpeedRadiansPerSecondSquared
     );
-  }
-
-  public static void confirmMantisConstants() {
-    if (mantis) {
-      Swerve.trackWidth = Units.inchesToMeters(19.75);
-      Swerve.wheelBase = Units.inchesToMeters(28.5);
-      Swerve.pigeonID = 1;
-      kTimeoutMs = 10;
-      Swerve.wheelCircumference = Swerve.chosenModule.wheelCircumference;
-      Swerve.swerveKinematics =
-        new SwerveDriveKinematics(
-          new Translation2d(Swerve.wheelBase / 2.0, Swerve.trackWidth / 2.0),
-          new Translation2d(Swerve.wheelBase / 2.0, -Swerve.trackWidth / 2.0),
-          new Translation2d(-Swerve.wheelBase / 2.0, Swerve.trackWidth / 2.0),
-          new Translation2d(-Swerve.wheelBase / 2.0, -Swerve.trackWidth / 2.0)
-        );
-
-      Swerve.chosenModule =
-        COTSFalconSwerveConstants.SDSMK3( //TODO: This must be tuned to specific robot
-          COTSFalconSwerveConstants.driveGearRatios.SDSMK3_Fast // or standard idk?
-        );
-      Swerve.driveGearRatio = Swerve.chosenModule.driveGearRatio;
-      Swerve.angleGearRatio = Swerve.chosenModule.angleGearRatio;
-      Swerve.driveMotorInvert = Swerve.chosenModule.driveMotorInvert;
-      Swerve.angleMotorInvert = Swerve.chosenModule.angleMotorInvert;
-      Swerve.canCoderInvert = Swerve.chosenModule.canCoderInvert;
-      Swerve.Mod0.angleOffset = Rotation2d.fromDegrees(264.28); //166.99
-      Swerve.Mod0.constants =
-        new SwerveModuleConstants(
-          Swerve.Mod0.driveMotorID,
-          Swerve.Mod0.angleMotorID,
-          +Swerve.Mod0.canCoderID,
-          Swerve.Mod0.angleOffset
-        );
-
-      Swerve.Mod1.angleOffset = Rotation2d.fromDegrees(93.16); //275.27
-      Swerve.Mod1.constants =
-        new SwerveModuleConstants(
-          Swerve.Mod1.driveMotorID,
-          Swerve.Mod1.angleMotorID,
-          Swerve.Mod1.canCoderID,
-          Swerve.Mod1.angleOffset
-        );
-
-      Swerve.Mod2.angleOffset = Rotation2d.fromDegrees(125.59); //83.84
-      Swerve.Mod2.constants =
-        new SwerveModuleConstants(
-          Swerve.Mod2.driveMotorID,
-          Swerve.Mod2.angleMotorID,
-          Swerve.Mod2.canCoderID,
-          Swerve.Mod2.angleOffset
-        );
-
-      Swerve.Mod3.angleOffset = Rotation2d.fromDegrees(345.41); //308.5
-      Swerve.Mod3.constants =
-        new SwerveModuleConstants(
-          Swerve.Mod3.driveMotorID,
-          Swerve.Mod3.angleMotorID,
-          Swerve.Mod3.canCoderID,
-          Swerve.Mod3.angleOffset
-        );
-    }
   }
 }
