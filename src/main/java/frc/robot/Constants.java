@@ -1,6 +1,5 @@
 package frc.robot;
 
-//hello
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -20,16 +19,11 @@ public final class Constants {
   public static final double LIMELIGHT_DEADBAND = 0.15;
   public static final double MIN_STEER_K = .05;
 
-  //1540
-  //1655
-
   // elevator constants
   public static final int elevatorUpperLimit = 97733;
   // this is used to set a threshold where the arm position needs to be considered
   public static final int elevatorLowerThreshold = 50000;
-  // set height for elevator pos 1
   public static final int elevatorTopCone = 97733;
-  // set height for elevator pos 2
   public static final int elevatorMidCone = 62000;
   public static final int elevatorTopCube = 79731;
   public static final int elevatorMidCube = 45811;
@@ -59,7 +53,6 @@ public final class Constants {
   // arm encoder
   public static final double armEncoderOffset = 312.02;
 
-  // weird motion magic
   /**
    * Which PID slot to pull gains from. Starting 2018, you can choose from
    * 0,1,2 or 3. Only the first two (0,1) are visible in web-based
@@ -158,9 +151,9 @@ public final class Constants {
     public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
     public static final NeutralMode driveNeutralMode = NeutralMode.Brake;
 
-    /* Module Specific Constants */
+    /* Module Constants (Offset!) */
     /* Front Left Module - Module 0 */
-    public static final class Mod0 { //TODO: This must be tuned to specific robot
+    public static final class Mod0 {
 
       public static int driveMotorID = 12;
       public static int angleMotorID = 11;
@@ -175,7 +168,7 @@ public final class Constants {
     }
 
     /* Front Right Module - Module 1 */
-    public static final class Mod1 { //TODO: This must be tuned to specific robot
+    public static final class Mod1 {
 
       public static int driveMotorID = 42;
       public static int angleMotorID = 41;
@@ -190,7 +183,7 @@ public final class Constants {
     }
 
     /* Back Left Module - Module 2 */
-    public static final class Mod2 { //TODO: This must be tuned to specific robot
+    public static final class Mod2 {
 
       public static int driveMotorID = 22;
       public static int angleMotorID = 21;
@@ -205,7 +198,7 @@ public final class Constants {
     }
 
     /* Back Right Module - Module 3 */
-    public static final class Mod3 { //TODO: This must be tuned to specific robot
+    public static final class Mod3 {
 
       public static int driveMotorID = 32;
       public static int angleMotorID = 31;
@@ -220,7 +213,7 @@ public final class Constants {
     }
   }
 
-  public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
+  public static final class AutoConstants {
 
     public static final double kMaxSpeedMetersPerSecond = 3;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;

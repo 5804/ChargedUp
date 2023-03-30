@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
+import java.util.function.BooleanSupplier;
 
 public class Claw extends SubsystemBase {
 
@@ -89,6 +90,9 @@ public class Claw extends SubsystemBase {
       .andThen(() -> closeCone())
       .andThen(() -> LED.GreenFlow())
       .andThen(RobotContainer.m_Elevator.setStow())
+      .unless(() ->
+        RobotContainer.m_Elevator.armMotor.getSelectedSensorPosition() > 1400
+      ) //it's possible the unless will stop things bc idk if it moves on
       .finallyDo(interrupted -> {
         closeCone();
         RobotContainer.m_Elevator.armAndElevatorStopPercentMode();
@@ -105,6 +109,9 @@ public class Claw extends SubsystemBase {
       .andThen(() -> closeCube())
       .andThen(() -> LED.GreenFlow())
       .andThen(RobotContainer.m_Elevator.setStow())
+      .unless(() ->
+        RobotContainer.m_Elevator.armMotor.getSelectedSensorPosition() > 1400
+      )
       .finallyDo(interrupted -> {
         closeCone();
         RobotContainer.m_Elevator.armAndElevatorStopPercentMode();

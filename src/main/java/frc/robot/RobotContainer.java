@@ -24,7 +24,7 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
 
   /* Controllers */
-  //ok
+
   public final XboxController driver1 = new XboxController(0);
   private final Joystick buttonBoard = new Joystick(1); //maybe 2 idk fix the ports
   private final Joystick driver2 = new Joystick(2);
