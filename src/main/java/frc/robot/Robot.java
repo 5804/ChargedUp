@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -71,7 +72,11 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
     m_robotContainer.m_Elevator.armAndElevatorStopPercentMode();
     Swerve.resetModulesToAbsolute();
-    LED.Fire();
+    if (DriverStation.isFMSAttached()) {
+      LED.Fire();
+    } else {
+      LED.Rainbow();
+    }
   }
 
   @Override

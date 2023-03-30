@@ -26,16 +26,14 @@ public class Claw extends SubsystemBase {
   public TimeOfFlight TOF;
 
   public Claw() {
-    if (!Constants.mantis) {
-      clawPiston1 = new DoubleSolenoid(PneumaticsModuleType.REVPH, 1, 0);
-      clawPiston2 = new DoubleSolenoid(PneumaticsModuleType.REVPH, 3, 2); //idk
-      clawMotor = new TalonFX(4);
-      clawPiston1.set(Value.kForward);
-      clawPiston2.set(Value.kForward);
+    clawPiston1 = new DoubleSolenoid(PneumaticsModuleType.REVPH, 1, 0);
+    clawPiston2 = new DoubleSolenoid(PneumaticsModuleType.REVPH, 3, 2); //idk
+    clawMotor = new TalonFX(4);
+    clawPiston1.set(Value.kForward);
+    clawPiston2.set(Value.kForward);
 
-      TOF = new TimeOfFlight(1);
-      TOF.setRangingMode(RangingMode.Short, 30);
-    }
+    TOF = new TimeOfFlight(1);
+    TOF.setRangingMode(RangingMode.Short, 30);
   }
 
   public CommandBase motorForward() {

@@ -157,47 +157,47 @@ public class RobotContainer {
     m_autoChooser.setDefaultOption("Nothing", new InstantCommand());
 
     m_autoChooser.addOption(
-      "Cone/Mobility/Balance",
+      "(CEN.) Cone/Mobility/Balance",
       new ConeMBalance(s_Swerve, m_Elevator, m_Claw)
     );
 
     m_autoChooser.addOption(
-      "Cube/Mobility/Balance",
+      "(CEN.) Cube/Mobility/Balance",
       new CubeMBalance(s_Swerve, m_Elevator, m_Claw)
     );
 
     m_autoChooser.addOption(
-      "2 Cone",
-      new ConeCone(s_Swerve, m_Elevator, m_Claw, m_Limelight)
-    );
-
-    m_autoChooser.addOption(
-      "2 Cone (WALL)",
-      new ConeCone(s_Swerve, m_Elevator, m_Claw, m_Limelight)
-    );
-
-    m_autoChooser.addOption(
-      "Cone/Grab Cone",
-      new ConeGrab(s_Swerve, m_Elevator, m_Claw)
-    );
-
-    m_autoChooser.addOption(
-      "Cone/Grab Cone (WALL)",
-      new ConeGrabWALL(s_Swerve, m_Elevator, m_Claw)
-    );
-
-    m_autoChooser.addOption(
-      "Cone/Grab/Balance",
+      "(CEN.) Cone/Grab/Balance",
       new ConeGrabBalance(s_Swerve, m_Elevator, m_Claw, m_Limelight)
     );
 
     m_autoChooser.addOption(
-      "Cube/Grab/Balance",
+      "(CEN.) Cube/Grab/Balance",
       new CubeGrabBalance(s_Swerve, m_Elevator, m_Claw, m_Limelight)
     );
 
     m_autoChooser.addOption(
-      "Leave Community",
+      "(LOAD) 2 Cone",
+      new ConeCone(s_Swerve, m_Elevator, m_Claw, m_Limelight)
+    );
+
+    m_autoChooser.addOption(
+      "(LOAD) Cone/Grab Cone",
+      new ConeGrab(s_Swerve, m_Elevator, m_Claw)
+    );
+
+    m_autoChooser.addOption(
+      "(WALL) Cone/Grab Cone",
+      new ConeGrabWALL(s_Swerve, m_Elevator, m_Claw)
+    );
+
+    m_autoChooser.addOption(
+      "(WALL) 2 Cone",
+      new ConeCone(s_Swerve, m_Elevator, m_Claw, m_Limelight)
+    );
+
+    m_autoChooser.addOption(
+      "(LOAD/WALL) Leave Community",
       new Leave(s_Swerve, m_Elevator, m_Claw)
     );
 
@@ -228,148 +228,95 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     /* Driver Buttons */
-    if (!Constants.mantis) {
-      // leftBumper1.whileTrue(m_Claw.openAllIn());
-      // leftBumper1.onFalse(m_Claw.open1Hold());
-      leftBumper1.whileTrue(m_Claw.openCubeCommand());
-      leftBumper1.onFalse(m_Elevator.setStow());
-      rightBumper1.whileTrue(m_Claw.openConeCommand());
-      rightBumper1.onFalse(m_Elevator.setStow());
-      // rightBumper1.whileTrue(m_Claw.open1In());
-      // rightBumper1.onFalse(m_Claw.closeAllHold());
+    leftBumper1.whileTrue(m_Claw.openCubeCommand());
+    leftBumper1.onFalse(m_Elevator.setStow());
+    rightBumper1.whileTrue(m_Claw.openConeCommand());
+    rightBumper1.onFalse(m_Elevator.setStow());
+    aButton1.onTrue(m_Claw.openAllOut());
+    aButton1.onFalse(m_Claw.motorOff());
+    bButton1.onTrue(m_Claw.openAllDrop());
 
-      // leftStickButton1.onTrue(new ConditionalCommand(m_Elevator.setStow(), m_Elevator.sequentialSetPositions(
-      //   Constants.elevatorFloor,
-      //   Constants.armFloor
-      // ), leftStickButton1.))
+    xButton1.onTrue(s_Swerve.moveToGoal());
+    leftStickButton1.onTrue(m_Elevator.setToFloor());
 
-      // aButton1.onTrue(m_Elevator.setPositions(205800, 976));
-      // bButton1.onTrue(m_Elevator.setPositions(80000, 1000));
-      aButton1.onTrue(m_Claw.openAllOut());
-      aButton1.onFalse(m_Claw.motorOff());
-      bButton1.onTrue(m_Claw.openAllDrop());
+    rightStickButton1.onTrue(m_Elevator.setStow());
 
-      xButton1.onTrue(s_Swerve.moveToGoal());
+    rightTrigger.onTrue(
+      m_Elevator.sequentialSetPositions(
+        Constants.elevatorShelf,
+        Constants.armShelf
+      )
+    );
 
-      // yButton1.onTrue(s_Swerve.moveToGoalAprilTags());
+    //Elevator Arm Presets
+    b1.onTrue(
+      m_Elevator.sequentialSetPositions(
+        Constants.elevatorTopCone,
+        Constants.armTopCone
+      )
+    );
+    b2.onTrue(
+      m_Elevator.sequentialSetPositions(
+        Constants.elevatorMidCone,
+        Constants.armMidCone
+      )
+    );
+    b3.onTrue(
+      m_Elevator.sequentialSetPositions(
+        Constants.elevatorTopCube,
+        Constants.armTopCube
+      )
+    );
+    b4.onTrue(
+      m_Elevator.sequentialSetPositions(
+        Constants.elevatorMidCube,
+        Constants.armMidCube
+      )
+    );
+    b5.onTrue(m_Elevator.setStow());
+    b6.onTrue(
+      m_Elevator.sequentialSetPositions(
+        Constants.elevatorShelf,
+        Constants.armShelf
+      )
+    );
 
-      // xButton1.whileTrue(new RunCommand(s_Swerve::autoBalance, s_Swerve));
+    b7.whileTrue(m_Elevator.armUp());
+    b8.whileTrue(m_Elevator.armDown());
+    b9.whileTrue(m_Elevator.runUp());
+    b10.whileTrue(m_Elevator.runDown());
 
-      // xButton1.onTrue(s_Swerve.xWheelsCommand());
-      // xButton1.onTrue(new SnapToAngle(s_Swerve, 0));
-      // xButton1.onTrue(s_Swerve.alignToGoal());
+    b11.onTrue(
+      new InstantCommand(() -> {
+        m_LED.LEDColor(255, 140, 0);
+        m_Limelight.setToRetroreflectiveTape();
+      })
+    );
+    b12.onTrue(
+      new InstantCommand(() -> {
+        m_LED.LEDColor(255, 0, 255);
+        m_Limelight.setToAprilTags();
+      })
+    );
 
-      leftStickButton1.onTrue(m_Elevator.setToFloor());
+    start1.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+    back1.onTrue(new InstantCommand(() -> Swerve.resetModulesToAbsolute()));
 
-      rightStickButton1.onTrue(m_Elevator.setStow());
+    dUp1.whileTrue(
+      s_Swerve.driveContinuous(new Translation2d(.2, 0), 0, true, false)
+    );
 
-      rightTrigger.onTrue(
-        m_Elevator.sequentialSetPositions(
-          Constants.elevatorShelf,
-          Constants.armShelf
-        )
-      );
+    dRight1.whileTrue(
+      s_Swerve.driveContinuous(new Translation2d(0, -0.2), 0, true, false)
+    );
 
-      //Elevator Arm Presets
-      b1.onTrue(
-        // new SequentialCommandGroup(
-        //   // s_Swerve.moveToGoalRetroreflective(),
-        //   // s_Swerve.moveToGoalRetroreflective(),
-        //   m_Elevator.sequentialSetPositions(
-        //     Constants.elevatorTopCone,
-        //     Constants.armTopCone
-        //   )
-        // )
-        m_Elevator.sequentialSetPositions(
-          Constants.elevatorTopCone,
-          Constants.armTopCone
-        )
-      );
-      b2.onTrue(
-        // new SequentialCommandGroup(
-        //   // s_Swerve.moveToGoalRetroreflective(),
-        //   m_Elevator.sequentialSetPositions(
-        //     Constants.elevatorMidCone,
-        //     Constants.armMidCone
-        //   )
-        // )
-        m_Elevator.sequentialSetPositions(
-          Constants.elevatorMidCone,
-          Constants.armMidCone
-        )
-      );
-      b3.onTrue(
-        // new SequentialCommandGroup(
-        //   // s_Swerve.moveToGoalAprilTags(),
-        //   m_Elevator.sequentialSetPositions(
-        //     Constants.elevatorTopCube,
-        //     Constants.armTopCube
-        //   )
-        // )
-        m_Elevator.sequentialSetPositions(
-          Constants.elevatorTopCube,
-          Constants.armTopCube
-        )
-      );
-      b4.onTrue(
-        // new SequentialCommandGroup(
-        //   // s_Swerve.moveToGoalAprilTags(),
-        //   m_Elevator.sequentialSetPositions(
-        //     Constants.elevatorMidCube,
-        //     Constants.armMidCube
-        //   )
-        // )
-        m_Elevator.sequentialSetPositions(
-          Constants.elevatorMidCube,
-          Constants.armMidCube
-        )
-      );
-      b5.onTrue(m_Elevator.setStow());
-      b6.onTrue(
-        m_Elevator.sequentialSetPositions(
-          Constants.elevatorShelf,
-          Constants.armShelf
-        )
-      );
+    dDown1.whileTrue(
+      s_Swerve.driveContinuous(new Translation2d(-0.2, 0), 0, true, false)
+    );
 
-      b7.whileTrue(m_Elevator.armUp());
-      b8.whileTrue(m_Elevator.armDown());
-      b9.whileTrue(m_Elevator.runUp());
-      b10.whileTrue(m_Elevator.runDown());
-
-      b11.onTrue(
-        new InstantCommand(() -> {
-          m_LED.LEDColor(255, 140, 0);
-          m_Limelight.setToRetroreflectiveTape();
-          // m_LED.Fire();
-        })
-      );
-      b12.onTrue(
-        new InstantCommand(() -> {
-          m_LED.LEDColor(255, 0, 255);
-          m_Limelight.setToAprilTags();
-        })
-      );
-
-      start1.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-      back1.onTrue(new InstantCommand(() -> Swerve.resetModulesToAbsolute()));
-
-      dUp1.whileTrue(
-        s_Swerve.driveContinuous(new Translation2d(.2, 0), 0, true, false)
-      );
-
-      dRight1.whileTrue(
-        s_Swerve.driveContinuous(new Translation2d(0, -0.2), 0, true, false)
-      );
-
-      dDown1.whileTrue(
-        s_Swerve.driveContinuous(new Translation2d(-0.2, 0), 0, true, false)
-      );
-
-      dLeft1.whileTrue(
-        s_Swerve.driveContinuous(new Translation2d(0, .2), 0, true, false)
-      );
-    }
+    dLeft1.whileTrue(
+      s_Swerve.driveContinuous(new Translation2d(0, .2), 0, true, false)
+    );
   }
 
   /**
