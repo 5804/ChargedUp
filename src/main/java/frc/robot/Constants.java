@@ -24,11 +24,11 @@ public final class Constants {
   // this is used to set a threshold where the arm position needs to be considered
   public static final int elevatorLowerThreshold = 50000;
   public static final int elevatorTopCone = 97733;
-  public static final int elevatorMidCone = 62000;
+  public static final int elevatorMidCone = 60464;
   public static final int elevatorTopCube = 79731;
   public static final int elevatorMidCube = 45811;
   public static final int elevatorStow = 0;
-  public static final int elevatorFloor = 16499;
+  public static final int elevatorFloor = 17124;
   public static final int elevatorShelf = 63166;
 
   // arm constants
@@ -38,11 +38,11 @@ public final class Constants {
   // set height for arm pos 1
   public static final int armTopCone = 992;
   // set height for arm pos 2
-  public static final int armMidCone = 1254;
+  public static final int armMidCone = 1280;
   public static final int armTopCube = 1013;
   public static final int armMidCube = 1334;
-  public static final int armStow = 1675;
-  public static final int armFloor = 529;
+  public static final int armStow = 1600;
+  public static final int armFloor = 505;
   public static final int armShelf = 1120;
 
   //arm feed forward
@@ -51,7 +51,7 @@ public final class Constants {
   public static final double maxFF = .03;
 
   // arm encoder
-  public static final double armEncoderOffset = 312.02;
+  public static final double armEncoderOffset = 93.516;
 
   /**
    * Which PID slot to pull gains from. Starting 2018, you can choose from

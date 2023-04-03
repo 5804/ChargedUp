@@ -134,8 +134,8 @@ public class Elevator extends SubsystemBase {
     mainMotor.configAllowableClosedloopError(Constants.kSlotIdx1, 100);
 
     /* Set acceleration and vcruise velocity - see documentation */
-    mainMotor.configMotionCruiseVelocity(13000, Constants.kTimeoutMs);
-    mainMotor.configMotionAcceleration(13000, Constants.kTimeoutMs);
+    mainMotor.configMotionCruiseVelocity(14000, Constants.kTimeoutMs);
+    mainMotor.configMotionAcceleration(23000, Constants.kTimeoutMs);
 
     armMotor.setStatusFramePeriod(
       StatusFrameEnhanced.Status_13_Base_PIDF0,
@@ -164,10 +164,13 @@ public class Elevator extends SubsystemBase {
 
     /* Set acceleration and vcruise velocity - see documentation */
     armMotor.configMotionCruiseVelocity(280, Constants.kTimeoutMs);
-    armMotor.configMotionAcceleration(280, Constants.kTimeoutMs);
+    armMotor.configMotionAcceleration(400, Constants.kTimeoutMs);
 
     mainMotor.configForwardSoftLimitEnable(true);
     mainMotor.configForwardSoftLimitThreshold(Constants.elevatorUpperLimit);
+
+    mainMotor.configReverseSoftLimitEnable(true);
+    mainMotor.configReverseSoftLimitThreshold(-100);
 
     armMotor.configForwardSoftLimitEnable(true);
     armMotor.configForwardSoftLimitThreshold(Constants.armUpperLimit);
@@ -271,10 +274,10 @@ public class Elevator extends SubsystemBase {
             armMotor.getActiveTrajectoryPosition() > Constants.armFloor - 20 &&
             mainMotor.getActiveTrajectoryPosition() <
             Constants.elevatorFloor +
-            30000 &&
+            500 &&
             mainMotor.getActiveTrajectoryPosition() >
             Constants.elevatorFloor -
-            30000
+            500
           )
           .withTimeout(2)
       )
@@ -332,7 +335,7 @@ public class Elevator extends SubsystemBase {
               30000 &&
               mainMotor.getActiveTrajectoryPosition() > elevatorPosition - 30000
             )
-            .withTimeout(1.5)
+            .withTimeout(2)
         )
         .andThen(
           runOnce(() ->
