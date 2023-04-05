@@ -68,11 +68,11 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
     m_robotContainer.m_Elevator.armAndElevatorStopPercentMode();
     Swerve.resetModulesToAbsolute();
-    // if (DriverStation.isFMSAttached()) {
-    LED.Fire();
-    // } else {
-    //   LED.Rainbow();
-    // }
+    if (DriverStation.isFMSAttached()) {
+      LED.Fire();
+    } else {
+      LED.Rainbow();
+    }
   }
 
   @Override

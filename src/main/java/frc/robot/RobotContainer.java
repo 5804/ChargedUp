@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -161,11 +163,6 @@ public class RobotContainer {
     );
 
     m_autoChooser.addOption(
-      "(CEN.) Cube/Mobility/Balance",
-      new CubeMBalance(s_Swerve, m_Elevator, m_Claw)
-    );
-
-    m_autoChooser.addOption(
       "(CEN.) Cone/Grab/Balance",
       new ConeGrabBalance(s_Swerve, m_Elevator, m_Claw, m_Limelight)
     );
@@ -181,6 +178,11 @@ public class RobotContainer {
     );
 
     m_autoChooser.addOption(
+      "(LOAD) Cube Cone",
+      new CubeCone(s_Swerve, m_Elevator, m_Claw, m_Limelight)
+    );
+
+    m_autoChooser.addOption(
       "(LOAD) Cone/Grab Cone",
       new ConeGrab(s_Swerve, m_Elevator, m_Claw)
     );
@@ -188,6 +190,22 @@ public class RobotContainer {
     m_autoChooser.addOption(
       "(WALL) Cone/Grab Cone",
       new ConeGrabWALL(s_Swerve, m_Elevator, m_Claw)
+    );
+
+    m_autoChooser.addOption(
+      "(TEST) Drive Left",
+      s_Swerve.followTrajectoryCommand(
+        PathPlanner.loadPath("Driveleft", 2, 2),
+        true
+      )
+    );
+
+    m_autoChooser.addOption(
+      "(TEST) Drive Forward",
+      s_Swerve.followTrajectoryCommand(
+        PathPlanner.loadPath("Driveforward", 2, 2),
+        true
+      )
     );
 
     m_autoChooser.addOption(

@@ -438,13 +438,10 @@ public class Elevator extends SubsystemBase {
           )
           .withTimeout(3)
       ) //wait until finished
-      .andThen(
-        runOnce(() ->
-          armMotor.configForwardSoftLimitThreshold(Constants.armUpperLimit)
-        )
-      )
+      .andThen(runOnce(() -> armMotor.configForwardSoftLimitThreshold(1670)))
       // ) //set soft limit back to what it was
-      .andThen(runOnce(() -> this.armAndElevatorStopPercentMode()))
+      .andThen(() -> armMotor.set(TalonFXControlMode.PercentOutput, .02))
+      .andThen(() -> mainMotor.set(TalonFXControlMode.PercentOutput, 0.03))
       .andThen(() -> isStowing = false);
   }
 

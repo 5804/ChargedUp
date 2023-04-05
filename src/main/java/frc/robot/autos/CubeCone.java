@@ -12,23 +12,23 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Swerve;
 
-public class ConeCone extends SequentialCommandGroup {
+public class CubeCone extends SequentialCommandGroup {
 
-  public ConeCone(
+  public CubeCone(
     Swerve s_Swerve,
     Elevator m_Elevator,
     Claw m_Claw,
     Limelight m_Limelight
   ) {
-    PathPlannerTrajectory traj1 = PathPlanner.loadPath("Cone2GP", 4, 4);
-    PathPlannerTrajectory traj3 = PathPlanner.loadPath("GP2Cone", 4, 4);
+    PathPlannerTrajectory traj1 = PathPlanner.loadPath("Cube2GP", 4, 4);
+    PathPlannerTrajectory traj3 = PathPlanner.loadPath("GP2LoadCone", 4, 4);
     addCommands(
-      m_Claw.closeAllHold(),
+      m_Claw.open1Hold(),
       m_Elevator.sequentialSetPositions(
-        Constants.elevatorTopCone,
-        Constants.armTopCone
+        Constants.elevatorTopCube,
+        Constants.armTopCube
       ),
-      m_Claw.openAllDrop(),
+      m_Claw.openAllOut(),
       new WaitCommand(.25),
       m_Claw.motorOff(),
       m_Elevator.setStow(),
