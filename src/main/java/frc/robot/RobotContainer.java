@@ -3,9 +3,13 @@ package frc.robot;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -149,13 +153,30 @@ public class RobotContainer {
   public static final LED m_LED = new LED();
 
   private SendableChooser<Command> m_autoChooser = new SendableChooser<>();
+  public static SendableChooser<Integer> m_LEDCount;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     Swerve.resetModulesToAbsolute();
     Swerve.resetModulesToAbsolute();
 
+    // Shuffleboard
+    //   .getTab("SmartDashboard")
+    //   .add("LED count", 0)
+    //   .withWidget(BuiltInWidgets.kNumberSlider)
+    //   .getEntry();
+    m_LEDCount = new SendableChooser<>();
     m_autoChooser.setDefaultOption("Nothing", new InstantCommand());
+    m_LEDCount.setDefaultOption("0", 0);
+
+    m_LEDCount.addOption("20", 20);
+    m_LEDCount.addOption("55", 55);
+    m_LEDCount.addOption("100", 100);
+
+    m_autoChooser.addOption(
+      "(Wall) Cone/MidCone",
+      new ConeMidCone(s_Swerve, m_Elevator, m_Claw, m_Limelight)
+    );
 
     m_autoChooser.addOption(
       "(CEN.) Cone/Mobility/Balance",
@@ -219,6 +240,7 @@ public class RobotContainer {
     );
 
     SmartDashboard.putData("Auto Chooser", m_autoChooser);
+    SmartDashboard.putData("LED Chooser", m_LEDCount);
 
     s_Swerve.setDefaultCommand(
       new TeleopSwerve(

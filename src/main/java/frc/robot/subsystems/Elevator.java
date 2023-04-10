@@ -288,7 +288,7 @@ public class Elevator extends SubsystemBase {
     final int elevatorPosition,
     int armPosition
   ) {
-    System.out.println(Swerve.mSwerveMods[0].getState().speedMetersPerSecond);
+    // System.out.println(Swerve.mSwerveMods[0].getState().speedMetersPerSecond);
     // if (Math.abs(Swerve.mSwerveMods[0].getState().speedMetersPerSecond) > 0) {
     //   return new InstantCommand(() -> LED.LEDColor(256, 0, 0));
     // } else {

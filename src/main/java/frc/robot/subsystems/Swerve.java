@@ -129,13 +129,13 @@ public class Swerve extends SubsystemBase {
   }
 
   public CommandBase moveToGoal() {
-    return new SnapToAngle(this, 0.0)
-      .andThen(
-        run(() -> alignToGoal())
-          .until(() -> m_Limelight.getSteeringValue() == 0)
-      )
-      .withTimeout(1)
-      .andThen(() -> drive(new Translation2d(0, 0), 0, true, false));
+    return new SnapToAngle(this, 0.0);
+    // .andThen(
+    //   run(() -> alignToGoal())
+    //     .until(() -> m_Limelight.getSteeringValue() == 0)
+    // )
+    // .withTimeout(1)
+    // .andThen(() -> drive(new Translation2d(0, 0), 0, true, false));
   }
 
   public CommandBase moveToGoalRetroreflective() {

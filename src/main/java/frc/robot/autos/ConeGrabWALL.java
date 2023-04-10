@@ -34,8 +34,7 @@ public class ConeGrabWALL extends SequentialCommandGroup {
           s_Swerve.followTrajectoryCommand(traj1, true)
         )
       ),
-      m_Claw.closeAllHold(),
-      new ParallelCommandGroup(m_Elevator.setStow())
+      m_Claw.closeAllHold()
     );
   }
 }

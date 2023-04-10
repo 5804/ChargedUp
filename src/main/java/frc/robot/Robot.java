@@ -7,7 +7,11 @@ package frc.robot;
 import com.pathplanner.lib.server.PathPlannerServer;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.LED;
@@ -29,6 +33,8 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   private Constants constants;
+
+  boolean offYet;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -66,17 +72,35 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
+    offYet = false;
+    LED.Off();
     m_robotContainer.m_Elevator.armAndElevatorStopPercentMode();
     Swerve.resetModulesToAbsolute();
     if (DriverStation.isFMSAttached()) {
       LED.Fire();
     } else {
-      LED.Rainbow();
+      // LED.Rainbow((int) (((RobotController.getBatteryVoltage()) - 10)) * 18);
     }
   }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    if (!DriverStation.isFMSAttached()) {
+      if (offYet == false) {
+        LED.Off();
+        offYet = true;
+      } else {
+        if (RobotController.getBatteryVoltage() > 10) {
+          LED.Rainbow(
+            //(int) (RobotContainer.m_LEDCount.getSelected())
+            ((int) ((RobotController.getBatteryVoltage() - 10) * 18.3))
+          );
+        } else {
+          LED.Off();
+        }
+      }
+    }
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
@@ -84,6 +108,11 @@ public class Robot extends TimedRobot {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     m_robotContainer.s_Swerve.zeroGyro();
     Swerve.resetModulesToAbsolute();
+    if (DriverStation.getAlliance() == Alliance.Blue) {
+      LED.LEDColor(0, 0, 255);
+    } else if (DriverStation.getAlliance() == Alliance.Red) {
+      LED.LEDColor(255, 0, 0);
+    }
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();

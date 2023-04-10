@@ -30,16 +30,17 @@ public class ConeGrabBalance extends SequentialCommandGroup {
         Constants.armTopCone
       ),
       m_Claw.openAllDrop(),
-      new WaitCommand(.25),
+      new WaitCommand(.1),
       m_Claw.motorOff(),
-      m_Elevator.setStow(),
       new ParallelCommandGroup(
         new SequentialCommandGroup(
+          m_Elevator.setStow(),
           new WaitCommand(.25),
           m_Elevator.setToFloor(),
           m_Claw.openAllIn()
         ),
         new SequentialCommandGroup(
+          new WaitCommand(.25),
           s_Swerve.followTrajectoryCommand(traj1, true)
         )
       ),
@@ -55,3 +56,17 @@ public class ConeGrabBalance extends SequentialCommandGroup {
     );
   }
 }
+/*m_Claw.openAllDrop(),
+      new WaitCommand(.25),
+      m_Claw.motorOff(),
+      new ParallelCommandGroup(
+        new SequentialCommandGroup(
+          m_Elevator.setStow(),
+          new WaitCommand(.25),
+          m_Elevator.setToFloor(),
+          m_Claw.openAllIn()
+        ),
+        new SequentialCommandGroup(
+          new WaitCommand(.5),
+          s_Swerve.followTrajectoryCommand(traj1, true)
+        ) */

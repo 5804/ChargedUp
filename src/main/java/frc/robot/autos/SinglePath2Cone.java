@@ -2,18 +2,23 @@ package frc.robot.autos;
 
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.PathPlannerTrajectory.EventMarker;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Swerve;
+import java.util.List;
 
-public class ConeGrab extends SequentialCommandGroup {
+public class SinglePath2Cone extends SequentialCommandGroup {
 
-  public ConeGrab(Swerve s_Swerve, Elevator m_Elevator, Claw m_Claw) {
-    PathPlannerTrajectory traj1 = PathPlanner.loadPath("Cone2GP", 4, 4);
+  public SinglePath2Cone(Swerve s_Swerve, Elevator m_Elevator, Claw m_Claw) {
+    PathPlannerTrajectory traj = PathPlanner.loadPath("1Path2Cone", 4, 4);
+    // List<EventMarker> trajevents = traj.getMarkers();
+    // trajevents.get(0).waypointRelativePos;
     addCommands(
       m_Claw.closeAllHold(),
       m_Elevator.sequentialSetPositions(
@@ -21,24 +26,14 @@ public class ConeGrab extends SequentialCommandGroup {
         Constants.armTopCone
       ),
       m_Claw.openAllDrop(),
-      new WaitCommand(.25),
-      m_Claw.motorOff(),
+      new WaitCommand(.5),
       new ParallelCommandGroup(
+        m_Elevator.setStow(),
         new SequentialCommandGroup(
-          m_Elevator.setStow(),
           new WaitCommand(.25),
-          m_Elevator.sequentialSetPositions(
-            Constants.elevatorFloor,
-            Constants.armFloor
-          ),
-          m_Claw.openAllIn()
-        ),
-        new SequentialCommandGroup(
-          new WaitCommand(.5),
-          s_Swerve.followTrajectoryCommand(traj1, true)
+          s_Swerve.followTrajectoryCommand(traj, true)
         )
-      ),
-      m_Claw.closeAllHold()
+      )
     );
   }
 }

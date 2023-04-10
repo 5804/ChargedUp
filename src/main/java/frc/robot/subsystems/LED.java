@@ -7,6 +7,8 @@ import com.ctre.phoenix.led.CANdleConfiguration;
 import com.ctre.phoenix.led.ColorFlowAnimation;
 import com.ctre.phoenix.led.FireAnimation;
 import com.ctre.phoenix.led.RainbowAnimation;
+import com.ctre.phoenix.led.RgbFadeAnimation;
+import com.ctre.phoenix.led.SingleFadeAnimation;
 import com.ctre.phoenix.led.StrobeAnimation;
 import com.ctre.phoenix.led.TwinkleAnimation;
 import com.ctre.phoenix.led.TwinkleAnimation.TwinklePercent;
@@ -39,6 +41,17 @@ public class LED extends SubsystemBase {
     candle2.animate(null);
     candle1.setLEDs(r, g, b);
     candle2.setLEDs(r, g, b);
+  }
+
+  public static void Off() {
+    candle1.setLEDs(0, 0, 0);
+    candle2.setLEDs(0, 0, 0);
+  }
+
+  public static void Rainbow(int num) {
+    RainbowAnimation rainbowAnim = new RainbowAnimation(1, .5, num);
+    candle1.animate(rainbowAnim);
+    candle2.animate(rainbowAnim);
   }
 
   public static void Rainbow() {
