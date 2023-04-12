@@ -10,7 +10,7 @@ import frc.robot.subsystems.Swerve;
 public class Leave extends SequentialCommandGroup {
 
   public Leave(Swerve s_Swerve, Elevator m_Elevator, Claw m_Claw) {
-    PathPlannerTrajectory traj = PathPlanner.loadPath("Leave", 2, 2);
+    PathPlannerTrajectory traj = PathPlanner.loadPath("New Path", 3, 3);
     addCommands(s_Swerve.followTrajectoryCommand(traj, true));
   }
 }

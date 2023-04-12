@@ -199,6 +199,11 @@ public class RobotContainer {
     );
 
     m_autoChooser.addOption(
+      " testSinglePath2Cone",
+      new SinglePath2Cone(s_Swerve, m_Elevator, m_Claw)
+    );
+
+    m_autoChooser.addOption(
       "(LOAD) Cube Cone",
       new CubeCone(s_Swerve, m_Elevator, m_Claw, m_Limelight)
     );

@@ -3,6 +3,8 @@ package frc.robot.autos;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPlannerTrajectory.EventMarker;
+import com.pathplanner.lib.commands.FollowPathWithEvents;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -11,14 +13,53 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Swerve;
+import java.util.HashMap;
 import java.util.List;
 
 public class SinglePath2Cone extends SequentialCommandGroup {
 
   public SinglePath2Cone(Swerve s_Swerve, Elevator m_Elevator, Claw m_Claw) {
-    PathPlannerTrajectory traj = PathPlanner.loadPath("1Path2Cone", 4, 4);
-    // List<EventMarker> trajevents = traj.getMarkers();
-    // trajevents.get(0).waypointRelativePos;
+    PathPlannerTrajectory traj = PathPlanner.loadPath(
+      "1Path2ConeSubStation",
+      1.9,
+      1.9
+    );
+    HashMap<String, Command> eventMap = new HashMap<>();
+    eventMap.put(
+      "IntakeCone",
+      new SequentialCommandGroup(
+        m_Elevator.setToFloor(),
+        m_Claw.openConeCommand()
+      )
+    );
+    eventMap.put("StowAnyway", m_Elevator.setStow());
+    eventMap.put("Wait(0.5)", new WaitCommand(.5));
+    eventMap.put("Wait(0.25)", new WaitCommand(.25));
+    eventMap.put("DropCone", m_Claw.openAllDrop());
+    eventMap.put("ShootCube", m_Claw.openAllOut());
+    eventMap.put("IntakeCube", m_Claw.openCubeCommand());
+    eventMap.put("FloorIntake", m_Elevator.setToFloor());
+    eventMap.put(
+      "ConeHigh",
+      m_Elevator.sequentialSetPositions(
+        Constants.elevatorTopCone,
+        Constants.armTopCone
+      )
+    );
+    eventMap.put(
+      "CubeHigh",
+      m_Elevator.sequentialSetPositions(
+        Constants.elevatorTopCube,
+        Constants.armTopCube
+      )
+    );
+
+    FollowPathWithEvents PathCommand = new FollowPathWithEvents(
+      s_Swerve.followTrajectoryCommand(traj, true),
+      traj.getMarkers(),
+      eventMap
+    );
+
     addCommands(
       m_Claw.closeAllHold(),
       m_Elevator.sequentialSetPositions(
@@ -27,13 +68,17 @@ public class SinglePath2Cone extends SequentialCommandGroup {
       ),
       m_Claw.openAllDrop(),
       new WaitCommand(.5),
+      m_Elevator.setStow(),
       new ParallelCommandGroup(
-        m_Elevator.setStow(),
-        new SequentialCommandGroup(
-          new WaitCommand(.25),
-          s_Swerve.followTrajectoryCommand(traj, true)
-        )
-      )
+        new SequentialCommandGroup(new WaitCommand(.25), PathCommand)
+      ),
+      m_Elevator.sequentialSetPositions(
+        Constants.elevatorTopCone,
+        Constants.armTopCone
+      ),
+      new WaitCommand(.5),
+      m_Claw.openAllDrop(),
+      m_Elevator.setStow()
     );
   }
 }
