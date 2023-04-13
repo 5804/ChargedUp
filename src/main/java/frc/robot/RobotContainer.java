@@ -185,7 +185,7 @@ public class RobotContainer {
 
     m_autoChooser.addOption(
       "(CEN.) Cone/Grab/Balance",
-      new ConeGrabBalance(s_Swerve, m_Elevator, m_Claw, m_Limelight)
+      new ConeGrabBalance1PATH(s_Swerve, m_Elevator, m_Claw) //i want to test this but we can change it back if we need bc idk which would be more accurate honestly
     );
 
     m_autoChooser.addOption(
