@@ -189,23 +189,8 @@ public class RobotContainer {
     );
 
     m_autoChooser.addOption(
-      "(CEN.) Cube/Grab/Balance",
-      new CubeGrabBalance(s_Swerve, m_Elevator, m_Claw, m_Limelight)
-    );
-
-    m_autoChooser.addOption(
-      "(LOAD) 2 Cone",
-      new ConeCone(s_Swerve, m_Elevator, m_Claw, m_Limelight)
-    );
-
-    m_autoChooser.addOption(
-      " testSinglePath2Cone",
-      new SinglePath2Cone(s_Swerve, m_Elevator, m_Claw)
-    );
-
-    m_autoChooser.addOption(
-      "(LOAD) Cube Cone",
-      new CubeCone(s_Swerve, m_Elevator, m_Claw, m_Limelight)
+      " (LOAD) 2 Cone",
+      new ConeConeSUB(s_Swerve, m_Elevator, m_Claw)
     );
 
     m_autoChooser.addOption(
@@ -236,7 +221,7 @@ public class RobotContainer {
 
     m_autoChooser.addOption(
       "(WALL) 2 Cone",
-      new ConeCone(s_Swerve, m_Elevator, m_Claw, m_Limelight)
+      new ConeConeWALL(s_Swerve, m_Elevator, m_Claw)
     );
 
     m_autoChooser.addOption(

@@ -16,9 +16,9 @@ import frc.robot.subsystems.Swerve;
 import java.util.HashMap;
 import java.util.List;
 
-public class SinglePath2Cone extends SequentialCommandGroup {
+public class ConeConeSUB extends SequentialCommandGroup {
 
-  public SinglePath2Cone(Swerve s_Swerve, Elevator m_Elevator, Claw m_Claw) {
+  public ConeConeSUB(Swerve s_Swerve, Elevator m_Elevator, Claw m_Claw) {
     PathPlannerTrajectory traj = PathPlanner.loadPath(
       "1Path2ConeSubStation",
       1.9,
@@ -69,7 +69,7 @@ public class SinglePath2Cone extends SequentialCommandGroup {
       m_Claw.openAllDrop(),
       new WaitCommand(.5),
       m_Elevator.setStow(),
-      new ParallelCommandGroup(
+      new ParallelCommandGroup( //why did we make a parallel command group with only one thing in it
         new SequentialCommandGroup(new WaitCommand(.25), PathCommand)
       ),
       m_Elevator.sequentialSetPositions(
