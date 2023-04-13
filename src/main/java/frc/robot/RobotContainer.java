@@ -174,8 +174,8 @@ public class RobotContainer {
     m_LEDCount.addOption("100", 100);
 
     m_autoChooser.addOption(
-      "(Wall) Cone/MidCone",
-      new ConeMidCone(s_Swerve, m_Elevator, m_Claw, m_Limelight)
+      "(Wall) 1 Cone (1 Node)",
+      new ConeLowConeWALL(s_Swerve, m_Elevator, m_Claw)
     );
 
     m_autoChooser.addOption(
@@ -196,6 +196,11 @@ public class RobotContainer {
     m_autoChooser.addOption(
       "(LOAD) Cone/Grab Cone",
       new ConeGrab(s_Swerve, m_Elevator, m_Claw)
+    );
+
+    m_autoChooser.addOption(
+      "(LOAD) 2 Cone (1 Node)",
+      new ConeLowConeSUB(s_Swerve, m_Elevator, m_Claw)
     );
 
     m_autoChooser.addOption(
