@@ -84,7 +84,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledPeriodic() {
+  public void disabledPeriodic() { //we could do a timer and then some remainder math at intervals of the timer to reset the LEDs so stuff doesnt get stuck on colors
     if (!DriverStation.isFMSAttached()) {
       if (offYet == false) {
         LED.Off();

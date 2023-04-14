@@ -174,11 +174,6 @@ public class RobotContainer {
     m_LEDCount.addOption("100", 100);
 
     m_autoChooser.addOption(
-      "(WALL) 1 Cone (1 Node)",
-      new ConeLowConeWALL(s_Swerve, m_Elevator, m_Claw)
-    );
-
-    m_autoChooser.addOption(
       "(CEN.) Cone/Mobility/Balance",
       new ConeMBalance(s_Swerve, m_Elevator, m_Claw)
     );
@@ -270,7 +265,8 @@ public class RobotContainer {
     aButton1.onFalse(m_Claw.motorOff());
     bButton1.onTrue(m_Claw.openAllDrop());
 
-    xButton1.onTrue(s_Swerve.moveToGoal());
+    xButton1.onTrue(m_Claw.openAllShoot());
+    xButton1.onFalse(m_Claw.motorOff());
     leftStickButton1.onTrue(m_Elevator.setToFloor());
 
     rightStickButton1.onTrue(m_Elevator.setStow());

@@ -21,8 +21,8 @@ public class ConeLowConeSUB extends SequentialCommandGroup {
   public ConeLowConeSUB(Swerve s_Swerve, Elevator m_Elevator, Claw m_Claw) {
     PathPlannerTrajectory traj = PathPlanner.loadPath(
       "1PathConeMConeSub",
-      1.9,
-      1.9
+      2.1,
+      2.1
     );
     HashMap<String, Command> eventMap = new HashMap<>();
     eventMap.put(
@@ -39,6 +39,7 @@ public class ConeLowConeSUB extends SequentialCommandGroup {
     eventMap.put("ShootCube", m_Claw.openAllOut());
     eventMap.put("IntakeCube", m_Claw.openCubeCommand());
     eventMap.put("FloorIntake", m_Elevator.setToFloor());
+    eventMap.put("ConeShoot", m_Claw.openAllShoot());
     eventMap.put(
       "ConeHigh",
       m_Elevator.sequentialSetPositions(
@@ -63,19 +64,15 @@ public class ConeLowConeSUB extends SequentialCommandGroup {
     addCommands(
       m_Claw.closeAllHold(),
       m_Elevator.sequentialSetPositions(
-        Constants.elevatorMidCone,
-        Constants.armMidCone
+        Constants.elevatorTopCone,
+        Constants.armTopCone
       ),
       m_Claw.openAllDrop(),
       new WaitCommand(.5),
       m_Elevator.setStow(),
       new ParallelCommandGroup( //why did we make a parallel command group with only one thing in it
         new SequentialCommandGroup(new WaitCommand(.25), PathCommand)
-      ),
-      m_Elevator.setToFloor(),
-      new WaitCommand(.5),
-      m_Claw.openAllDrop(),
-      m_Elevator.setStow()
+      )
     );
   }
 }

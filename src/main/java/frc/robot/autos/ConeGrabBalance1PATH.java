@@ -71,10 +71,8 @@ public class ConeGrabBalance1PATH extends SequentialCommandGroup {
       ),
       m_Claw.openAllDrop(),
       m_Elevator.setStow(),
-      new ParallelCommandGroup(
-        PathCommand,
-        new RunCommand(s_Swerve::autoBalance, s_Swerve) //er
-      )
+      PathCommand,
+      new RunCommand(s_Swerve::autoBalance, s_Swerve) //er
     );
   }
 }

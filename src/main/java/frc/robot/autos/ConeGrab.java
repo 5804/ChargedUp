@@ -64,10 +64,7 @@ public class ConeGrab extends SequentialCommandGroup {
         Constants.armTopCone
       ),
       m_Claw.openAllDrop(),
-      new ParallelCommandGroup(
-        m_Elevator.setStow(),
-        new SequentialCommandGroup(new WaitCommand(.5), PathCommand) //unsure if the stow part will work
-      )
+      new SequentialCommandGroup(new WaitCommand(.5), PathCommand) //unsure if the stow part will work
     );
   }
 }
