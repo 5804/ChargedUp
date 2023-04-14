@@ -13,7 +13,7 @@ import frc.robot.subsystems.Swerve;
 public class ConeGrabWALL extends SequentialCommandGroup {
 
   public ConeGrabWALL(Swerve s_Swerve, Elevator m_Elevator, Claw m_Claw) {
-    PathPlannerTrajectory traj1 = PathPlanner.loadPath("Cone2GP2", 4, 4);
+    PathPlannerTrajectory traj1 = PathPlanner.loadPath("Cone2GP2", 1.9, 1.9);
     addCommands(
       m_Claw.closeAllHold(),
       m_Elevator.sequentialSetPositions(

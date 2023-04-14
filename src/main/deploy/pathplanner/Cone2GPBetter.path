@@ -49,15 +49,40 @@
     },
     {
       "anchorPoint": {
-        "x": 6.709949562756269,
-        "y": 4.723865162016039
+        "x": 5.951268188250662,
+        "y": 4.595032475779237
       },
       "prevControl": {
-        "x": 5.908323959505063,
-        "y": 4.995845277404841
+        "x": 4.390961210493849,
+        "y": 4.781124133676839
+      },
+      "nextControl": {
+        "x": 6.420115008464983,
+        "y": 4.539114965111474
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.695634819841068,
+        "y": 4.595032475779237
+      },
+      "prevControl": {
+        "x": 6.309136761130665,
+        "y": 4.566402989948837
       },
       "nextControl": null,
-      "holonomicAngle": 159.4439547804165,
+      "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -70,14 +95,20 @@
       }
     }
   ],
-  "maxVelocity": 3.0,
-  "maxAcceleration": null,
+  "maxVelocity": 2.0,
+  "maxAcceleration": 2.0,
   "isReversed": null,
   "markers": [
     {
       "position": 1.7454545454545451,
       "names": [
         "IntakeCone"
+      ]
+    },
+    {
+      "position": 2.8818181818181836,
+      "names": [
+        "StowAnyway"
       ]
     }
   ]
