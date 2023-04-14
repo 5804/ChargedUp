@@ -174,7 +174,7 @@ public class RobotContainer {
     m_LEDCount.addOption("100", 100);
 
     m_autoChooser.addOption(
-      "(Wall) 1 Cone (1 Node)",
+      "(WALL) 1 Cone (1 Node)",
       new ConeLowConeWALL(s_Swerve, m_Elevator, m_Claw)
     );
 
@@ -208,21 +208,21 @@ public class RobotContainer {
       new ConeGrabWALL(s_Swerve, m_Elevator, m_Claw)
     );
 
-    m_autoChooser.addOption(
-      "(TEST) Drive Left",
-      s_Swerve.followTrajectoryCommand(
-        PathPlanner.loadPath("Driveleft", 2, 2),
-        true
-      )
-    );
+    // m_autoChooser.addOption(
+    //   "(TEST) Drive Left",
+    //   s_Swerve.followTrajectoryCommand(
+    //     PathPlanner.loadPath("Driveleft", 2, 2),
+    //     true
+    //   )
+    // );
 
-    m_autoChooser.addOption(
-      "(TEST) Drive Forward",
-      s_Swerve.followTrajectoryCommand(
-        PathPlanner.loadPath("Driveforward", 2, 2),
-        true
-      )
-    );
+    // m_autoChooser.addOption(
+    //   "(TEST) Drive Forward",
+    //   s_Swerve.followTrajectoryCommand(
+    //     PathPlanner.loadPath("Driveforward", 2, 2),
+    //     true
+    //   )
+    // );
 
     m_autoChooser.addOption(
       "(WALL) 2 Cone",
