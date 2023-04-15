@@ -199,6 +199,11 @@ public class RobotContainer {
     );
 
     m_autoChooser.addOption(
+      "(WALL) 2 Cone (1 Node)",
+      new ConeLowConeWALL(s_Swerve, m_Elevator, m_Claw)
+    );
+
+    m_autoChooser.addOption(
       "(WALL) Cone/Grab Cone",
       new ConeGrabWALL(s_Swerve, m_Elevator, m_Claw)
     );

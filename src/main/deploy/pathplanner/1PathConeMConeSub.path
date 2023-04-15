@@ -241,6 +241,12 @@
       "names": [
         "ConeShoot"
       ]
+    },
+    {
+      "position": 6.6909090909090905,
+      "names": [
+        "IntakeCone"
+      ]
     }
   ]
 }

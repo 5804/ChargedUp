@@ -41,7 +41,7 @@ public final class Constants {
   public static final int armMidCone = 1175;
   public static final int armTopCube = 1013;
   public static final int armMidCube = 1223;
-  public static final int armStow = 1675;
+  public static final int armStow = 1648;
   public static final int armFloor = 505;
   public static final int armShelf = 1120;
 
