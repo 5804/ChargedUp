@@ -21,8 +21,8 @@ public class ConeLowConeWALL extends SequentialCommandGroup {
   public ConeLowConeWALL(Swerve s_Swerve, Elevator m_Elevator, Claw m_Claw) {
     PathPlannerTrajectory traj = PathPlanner.loadPath(
       "1PathConeMConeWallSAFE",
-      2.1,
-      2.1
+      1.9,
+      1.9
     );
     HashMap<String, Command> eventMap = new HashMap<>();
     eventMap.put(
