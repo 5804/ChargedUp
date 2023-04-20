@@ -29,16 +29,16 @@ public final class Constants {
   public static final int elevatorMidCube = 40369;
   public static final int elevatorStow = 0;
   public static final int elevatorFloor = 17124;
-  public static final int elevatorShelf = 63166;
+  public static final int elevatorShelf = 69432;
 
   // arm constants
   public static final int armUpperLimit = 1400; // DO NOT TOUCH
   // this is used to set a threshold of where the elevator postion needs to be considered
   public static final int armLowerThreshold = 800;
   // set height for arm pos 1
-  public static final int armTopCone = 992;
+  public static final int armTopCone = 1067;
   // set height for arm pos 2
-  public static final int armMidCone = 1175;
+  public static final int armMidCone = 1234;
   public static final int armTopCube = 1013;
   public static final int armMidCube = 1223;
   public static final int armStow = 1648;

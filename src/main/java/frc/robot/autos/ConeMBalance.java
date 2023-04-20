@@ -13,7 +13,7 @@ import frc.robot.subsystems.Swerve;
 public class ConeMBalance extends SequentialCommandGroup {
 
   public ConeMBalance(Swerve s_Swerve, Elevator m_Elevator, Claw m_Claw) {
-    PathPlannerTrajectory traj = PathPlanner.loadPath("GPMobilityCharge", 2, 2);
+    PathPlannerTrajectory traj = PathPlanner.loadPath("ConeMEngage", 2, 2);
     addCommands(
       m_Claw.closeAllHold(),
       m_Elevator.sequentialSetPositions(

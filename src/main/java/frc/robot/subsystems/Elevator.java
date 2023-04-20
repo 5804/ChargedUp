@@ -32,6 +32,7 @@ public class Elevator extends SubsystemBase {
   int upTargetPos = 10000;
   int downTargetPosition = 100;
   int count = 0;
+  public boolean shelfFlag = false;
 
   public Elevator() {
     SupplyCurrentLimitConfiguration elevatorSupplyLimit = new SupplyCurrentLimitConfiguration(
@@ -243,6 +244,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public CommandBase setToFloor() {
+    shelfFlag = false;
     mainMotor.selectProfileSlot(Constants.kSlotIdx0, Constants.kPIDLoopIdx);
     return runOnce(() ->
         armMotor.set(
@@ -380,6 +382,7 @@ public class Elevator extends SubsystemBase {
 
   // Test this
   public CommandBase setStow() {
+    shelfFlag = false;
     isStowing = true;
     mainMotor.selectProfileSlot(Constants.kSlotIdx1, Constants.kPIDLoopIdx);
     return runOnce(() ->

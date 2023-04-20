@@ -22,7 +22,7 @@ public class ConeGrabBalance1PATH extends SequentialCommandGroup {
     Claw m_Claw
   ) {
     PathPlannerTrajectory traj = PathPlanner.loadPath(
-      "GPMobilityCharge",
+      "GPMobilityChargeGrab",
       1.9,
       1.9
     );
